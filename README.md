@@ -10,7 +10,7 @@ For official Steam Web API information, visit the [official Steam API documentat
 This documentation aims to provide clear, structured, and developer-friendly reference material for the Steam Web API, including endpoint descriptions, request parameters, example requests and responses, and error handling guidance.
 
 ## Getting Started
-Documentation is available at: [your GitHub Pages URL here]
+Documentation is available at: https://hwittle.github.io/steam-web-api-docs/
 
 ## Contributing
 This is a portfolio project and is not currently open to external contributions.
