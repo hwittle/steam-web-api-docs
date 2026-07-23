@@ -22,8 +22,12 @@ Output returned as an XML document.
 - XML attributes are not used.
 - The arrays are represented as a series of labeled sub-elements tags describing the content contained inside.
 - Null is presented as the word "null" between the element tags.
+
 #### VDF
 Output returned as a VDF file.
+
+- Valve's internal data format.
+- The arrays are represented as a named VDF array describing  the types of objects listed within.
 
 ## Commands
 
