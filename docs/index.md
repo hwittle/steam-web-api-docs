@@ -7,6 +7,15 @@ A Steam account is needed in order to obtain a Steam Web API Key. You can create
 
 Once you have logged into your Steam account, obtain a Steam Web API Key at [steamcommunity.com/dev/apikey](https://steamcommunity.com/dev/apikey).
 
+---
+
+To find interfaces and methods, call [ISteamWebAPIUtil/GetSupportedAPIList](https://api.steampowered.com/ISteamWebAPIUtil/GetSupportedAPIList/v0001/).
+
+!!! note
+    By dafault, it only displays APIs that do not require an API key.
+
+    When passed a key parameter (`key=<your API key>`), GetSupportedAPIList will return all APIs that your key can access.
+
 ## Output Formats
 All Steam Web API calls can take the following form:
 `http://api.steampowered.com/<interface name>/<method name>/v<version>/?key=<api key>&format=<format>`
@@ -15,6 +24,24 @@ Output returned in the JSON format.
 
 - The arrays are represented as a named array describing the types of objects listed within.
 - Null is present as json's null
+``` json
+{
+    "apilist": {
+        "interfaces": [
+            {
+                "name": "IClientStats_1046930",
+                "methods": [
+                    {
+                        "name": "ReportEvent",
+                        "version": 1,
+                        "httpmethod": "POST",
+                        "parameters": []
+                    }
+                ]
+            },
+    }
+}
+```
 
 #### XML
 Output returned as an XML document.
@@ -28,17 +55,3 @@ Output returned as a VDF file.
 
 - Valve's internal data format.
 - The arrays are represented as a named VDF array describing  the types of objects listed within.
-
-## Commands
-
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
