@@ -12,7 +12,7 @@ nav:
       - GetRecentlyPlayedGames: get-recently-played-games.md
   - Response Formats: response-formats.md
   - Error Codes: error-codes.md
-  - Changelog: changelog.md
+  - Changelog: change-log.md
 markdown_extensions:
   - admonition
   - pymdownx.details
@@ -20,3 +20,10 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+plugins:
+  - search
+  - macros:
+      module_name: main
+      on_error_fail: false
+extra_css:
+  - stylesheets/style.css
