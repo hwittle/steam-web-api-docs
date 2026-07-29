@@ -1,0 +1,14 @@
+.md-typeset .admonition,
+.md-typeset details {
+    font-size: 0.9em;
+}
+
+.p_name {
+    font-family: Consolas, monospace;
+    font-weight: 600;
+}
+
+.p_type {
+    font-size: 0.9em;
+    font-weight: 600;
+}
