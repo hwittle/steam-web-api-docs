@@ -8,9 +8,9 @@ ISteamUser/GetFriendList/v0001/?key=<your API key>&<arguments>
 
 ### Arguments
 
-{{ param("steamids", "list", "Comma-delimited list of 64 bit Steam IDs to return profile information for. Up to 100 Steam IDs can be requested.") }}
+{{ param("steamids", "list", "User's 64-bit Steam ID") }}
 ```
-&steamids=<list of 64-bit Steam IDs separated by commas>
+&steamids=<64-bit Steam ID>
 ```
 
 {{ param("format", "string", "Values: all, friend.") }}
@@ -25,10 +25,10 @@ ISteamUser/GetFriendList/v0001/?key=<your API key>&<arguments>
 
 ### Returns
 
-Private Data associated with a Steam account are hidden if the user has their profile visibility set to `Friends Only` or `Private`.
+The user's friend list as an array of Steam users. Nothing will be returned if the user's Steam Community profile visibility is set to `Private`.
 
 {{ param("steamid", "integer", "64-bit Steam ID of the user's friend.") }}
 
-{{ param("personaname", "string", "User's persona (display) name.") }}
+{{ param("relationship", "string", "Relationship qualifier returned as `friend`.") }}
 
-{{ param("profileurl", "string", "The full URL of the user's Steam Community profile.") }}
+{{ param("friend_since", "integer", "In Unix time, when the relationship was created.") }}
