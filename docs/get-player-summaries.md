@@ -8,9 +8,9 @@ ISteamUser/GetPlayerSummaries/v0002/?key=<your API key>&<arguments>
 
 ### Arguments
 
-{{ param("steamids", "list", "Comma-delimited list of 64 bit Steam IDs to return profile information for. Up to 100 Steam IDs can be requested.") }}
+{{ param("steamids", "array", "Comma-delimited array of 64 bit Steam IDs to return profile information for. Up to 100 Steam IDs can be requested.") }}
 ```
-&steamids=<list of 64-bit Steam IDs separated by commas>
+&steamids=<array of 64-bit Steam IDs separated by commas>
 ```
 
 {{ param("format", "string", "Output format: json (default), xml, vdf.") }}

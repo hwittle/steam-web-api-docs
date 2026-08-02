@@ -13,7 +13,7 @@ If the user's achievement is set to visible, returns a list of achievement for t
 &steamids=<64-bit Steam ID>
 ```
 
-{{ param("appid", "integer", "The ID for the game you are requesting.") }}
+{{ param("appid", "integer", "Unique ID for the game you are requesting.") }}
 ```
 &appid=<ID number of the requested game>
 ```
