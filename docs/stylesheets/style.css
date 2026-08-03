@@ -1,3 +1,9 @@
+/* Enable wrapping and allow breaking words if necessary */
+div.highlight code {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 .md-typeset .admonition,
 .md-typeset details {
     font-size: 0.9em;

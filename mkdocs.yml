@@ -1,8 +1,13 @@
 site_name: Unofficial Steam Web API Documentation
+
 site_url: https://hwittle.github.io/steam-web-api-docs/
+
 theme:
   name: material
   font: false
+  features:
+    - navigation.expand
+    - toc.integrate
   palette: 
     - scheme: slate
       primary: "#00BFC4"
@@ -10,28 +15,34 @@ theme:
     - scheme: default
       primary: "#007F86"
       accent:  "#00BFC4"
+
 nav:
   - Home: index.md
-  - API Reference:
+  - ISteamUser:
     - GetPlayerSummaries: get-player-summaries.md
+  - API Reference:
     - GetFriendList: get-friend-list.md
     - GetPlayerAchievements: get-player-achievements.md
     - GetOwnedGames: get-owned-games.md
     - GetRecentlyPlayedGames: get-recently-played-games.md
-  - Response Formats: response-formats.md
-  - Error Codes: error-codes.md
-  - Changelog: change-log.md
+
 markdown_extensions:
   - admonition
+  - attr_list
+  - md_in_html
   - pymdownx.details
-  - pymdownx.superfences
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
 plugins:
   - search
   - macros:
       module_name: main
       on_error_fail: false
+
 extra_css:
   - stylesheets/style.css

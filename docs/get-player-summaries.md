@@ -2,23 +2,41 @@
 
 Retrieves the basic profile information for a list of 64-bit Steam IDs.
 
-```
-ISteamUser/GetPlayerSummaries/v0002/?key=<your API key>&<arguments>
-```
+=== "Endpoint"
+    ```
+    https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/
+    ```
 
-### Arguments
+=== "Example Request"
+    ```
+    https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=YOUR_API_KEY&steamids=76561197960435530
+    ```
+
+## Arguments
+
+<div class="cards" markdown>
+
+<div markdown>
 
 {{ param("steamids", "array", "Comma-delimited array of 64 bit Steam IDs to return profile information for. Up to 100 Steam IDs can be requested.") }}
-```
-&steamids=<array of 64-bit Steam IDs separated by commas>
-```
 
 {{ param("format", "string", "Output format: json (default), xml, vdf.") }}
-```
-&format=<json, xml, or vdf>
+
+</div>
+
+<div markdown>
+
+``` title="Example Request"
+https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=YOUR_API_KEY&steamids=76561197960435530
 ```
 
-### Returns
+</div>
+
+</div>
+
+---
+
+## Returns
 
 Private Data associated with a Steam account are hidden if the user has their profile visibility set to `Friends Only` or `Private`.
 

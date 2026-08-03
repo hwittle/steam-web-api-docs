@@ -30,9 +30,19 @@ If the user's Steam Community profile visibility is set to `Public`, returns a l
 
 {{ param("appids_filter", "array of integers", "You can optionally filter the list to a set of appids.") }}
 !!! note
-    Note that these cannot be passed as a URL parameter, instead you must use the JSON format described in Steam_Web_API#Calling_Service_interfaces.
+    This cannot be passed as a query parameter directly. You have to use the query parameter `input_json`, passing `steamid` and `appids_filter` nested inside as a URL-encoded parameter.
 ```
-&input_json=<URL-encoded parameters>
+&input_json={"steamid":<64-bit Steam ID>,"appids_filter":[400,500,550]}     //Portal, Left 4 Dead, Left 4 Dead 2
+```
+Encode the body parameter using a URL encoder.
+```
+Pretty version: {"steamid":<76561197972495328>,"appids_filter":[400,500,550]}
+
+URL encoded: %7B%22steamid%22%3A%3C76561197972495328%3E%2C%22appids_filter%22%3A%5B400%2C500%2C550%5D%7D
+```
+The result should be as follows:
+```
+https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=<your Steam API key>&format=json&input_json=%7B%22steamid%22%3A%3C76561197972495328%3E%2C%22appids_filter%22%3A%5B400%2C500%2C550%5D%7D
 ```
 
 ### Returns
