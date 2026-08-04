@@ -20,9 +20,10 @@ nav:
   - Home: index.md
   - ISteamUser:
     - GetPlayerSummaries: get-player-summaries.md
-  - API Reference:
     - GetFriendList: get-friend-list.md
+  - ISteamUserStats:
     - GetPlayerAchievements: get-player-achievements.md
+  - IPlayerService:
     - GetOwnedGames: get-owned-games.md
     - GetRecentlyPlayedGames: get-recently-played-games.md
 

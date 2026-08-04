@@ -2,23 +2,21 @@
 
 Retrieves the basic profile information for a list of 64-bit Steam IDs.
 
-=== "Endpoint"
-    ```
-    https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/
-    ```
-
-=== "Example Request"
-    ```
-    https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=YOUR_API_KEY&steamids=76561197960435530
-    ```
+``` title="Endpoint"
+https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/
+```
 
 ## Arguments
 
-<div class="cards" markdown>
+---
+
+<div class="grid" markdown>
 
 <div markdown>
 
-{{ param("steamids", "array", "Comma-delimited array of 64 bit Steam IDs to return profile information for. Up to 100 Steam IDs can be requested.") }}
+{{ param("key", "integer", "Your designated Steam Web API key.") }}
+
+{{ param("steamids", "array of integers", "Comma-delimited array of 64 bit Steam IDs to return profile information for. Up to 100 Steam IDs can be requested.") }}
 
 {{ param("format", "string", "Output format: json (default), xml, vdf.") }}
 
@@ -26,9 +24,14 @@ Retrieves the basic profile information for a list of 64-bit Steam IDs.
 
 <div markdown>
 
-``` title="Example Request"
-https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=YOUR_API_KEY&steamids=76561197960435530
-```
+=== "Example Request - Single User"
+    ```
+    https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=YOUR_API_KEY&steamids=76561199101839601&format=json
+    ```
+=== "Example Request - Multiple Users"
+    ```
+    https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=YOUR_API_KEY&steamids=76561199101839601, 76561198881233167, 76561198377784106&format=json
+    ```
 
 </div>
 
@@ -41,6 +44,11 @@ https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=YOUR_API_K
 Private Data associated with a Steam account are hidden if the user has their profile visibility set to `Friends Only` or `Private`.
 
 ---
+
+<div class="grid" markdown>
+
+<div markdown>
+
 #### Public Data
 
 {{ param("steamid", "integer", "User's 64-bit Steam ID.") }}
@@ -72,6 +80,7 @@ Private Data associated with a Steam account are hidden if the user has their pr
 {{ param("commentpermission", "integer", "Indicates if the user allows public comments.") }}
 
 ---
+
 #### Private Data
 
 {{ param("realname", "string", "If set, user's \"real name\"") }}
@@ -101,3 +110,95 @@ Private Data associated with a Steam account are hidden if the user has their pr
     - Use [gem/package](https://github.com/Holek/steam-friends-countries) to make user location data readable for output.
         - An updated readable list can be found at [github.com/quer/steam-friends-countries](https://github.com/quer/steam-friends-countries).
     - Getting locstatecode and loccityid, can now be done from `https://steamcommunity.com/actions/QueryLocations/<loccountrycode\>/<locstatecode\>/`
+
+</div>
+
+<div markdown>
+=== "JSON"
+    ```json
+    {
+        "response": {
+            "players": [
+                {
+                    "steamid": "76561199101839601",
+                    "communityvisibilitystate": 3,
+                    "profilestate": 1,
+                    "personaname": "ΛYΛ",
+                    "commentpermission": 1,
+                    "profileurl": "https://steamcommunity.com/id/amiaZzZ/",
+                    "avatar": "https://avatars.steamstatic.com/1b0f9f9bae10dd50e6a5a9043f96542bc7b0a4fe.jpg",
+                    "avatarmedium": "https://avatars.steamstatic.com/1b0f9f9bae10dd50e6a5a9043f96542bc7b0a4fe_medium.jpg",
+                    "avatarfull": "https://avatars.steamstatic.com/1b0f9f9bae10dd50e6a5a9043f96542bc7b0a4fe_full.jpg",
+                    "avatarhash": "1b0f9f9bae10dd50e6a5a9043f96542bc7b0a4fe",
+                    "personastate": 1,
+                    "realname": "Abi",
+                    "primaryclanid": "103582791474321399",
+                    "timecreated": 1603724668,
+                    "personastateflags": 0,
+                    "gameextrainfo": "Baldur's Gate 3",
+                    "gameid": "1086940",
+                    "lobbysteamid": "109775243509294359",
+                    "loccountrycode": "US"
+                }
+            ]
+        }
+    }
+    ```
+=== "XML"
+    ```
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE response>
+    <response>
+        <players>
+            <player>
+                <steamid>76561199101839601</steamid>
+                <communityvisibilitystate>3</communityvisibilitystate>
+                <profilestate>1</profilestate>
+                <personaname>Invocation: Women</personaname>
+                <commentpermission>1</commentpermission>
+                <profileurl>https://steamcommunity.com/id/amiaZzZ/</profileurl>
+                <avatar>https://avatars.steamstatic.com/1b0f9f9bae10dd50e6a5a9043f96542bc7b0a4fe.jpg</avatar>
+                <avatarmedium>https://avatars.steamstatic.com/1b0f9f9bae10dd50e6a5a9043f96542bc7b0a4fe_medium.jpg</avatarmedium>
+                <avatarfull>https://avatars.steamstatic.com/1b0f9f9bae10dd50e6a5a9043f96542bc7b0a4fe_full.jpg</avatarfull>
+                <avatarhash>1b0f9f9bae10dd50e6a5a9043f96542bc7b0a4fe</avatarhash>
+                <personastate>1</personastate>
+                <realname>Abi</realname>
+                <primaryclanid>103582791474321399</primaryclanid>
+                <timecreated>1603724668</timecreated>
+                <personastateflags>0</personastateflags>
+                <loccountrycode>US</loccountrycode>
+            </player>
+        </players>
+    </response>
+    ```
+=== "VDF"
+    ```
+    "response"
+    {
+        "players"
+        {
+            "0"
+            {
+                "steamid"	"76561199101839601"
+                "communityvisibilitystate"	"3"
+                "profilestate"	"1"
+                "personaname"	"Invocation: Women"
+                "commentpermission"	"1"
+                "profileurl"	"https://steamcommunity.com/id/amiaZzZ/"
+                "avatar"	"https://avatars.steamstatic.com/1b0f9f9bae10dd50e6a5a9043f96542bc7b0a4fe.jpg"
+                "avatarmedium"	"https://avatars.steamstatic.com/1b0f9f9bae10dd50e6a5a9043f96542bc7b0a4fe_medium.jpg"
+                "avatarfull"	"https://avatars.steamstatic.com/1b0f9f9bae10dd50e6a5a9043f96542bc7b0a4fe_full.jpg"
+                "avatarhash"	"1b0f9f9bae10dd50e6a5a9043f96542bc7b0a4fe"
+                "personastate"	"1"
+                "realname"	"Abi"
+                "primaryclanid"	"103582791474321399"
+                "timecreated"	"1603724668"
+                "personastateflags"	"0"
+                "loccountrycode"	"US"
+            }
+        }
+    }
+    ```
+</div>
+
+</div>

@@ -8,27 +8,116 @@ ISteamUser/GetFriendList/v0001/?key=<your API key>&<arguments>
 
 ### Arguments
 
-{{ param("steamids", "list", "User's 64-bit Steam ID") }}
-```
-&steamids=<64-bit Steam ID>
-```
+---
 
-{{ param("format", "string", "Values: all, friend.") }}
-```
-&relationship=<all or friend>
-```
+<div class="grid" markdown>
+
+<div markdown>
+
+{{ param("steamids", "integer", "User's 64-bit Steam ID") }}
+
+{{ param("relationship", "string", "Values: all, friend.") }}
 
 {{ param("format", "string", "Values: json (default), xml, vdf.") }}
-```
-&format=<json, xml, or vdf>
-```
+
+</div>
+
+<div markdown>
+
+=== "Example Request"
+    ```
+    https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=YOUR_API_KEY&steamids=76561199101839601&format=json
+    ```
+
+</div>
+
+</div>
 
 ### Returns
 
 The user's friend list as an array of Steam users. Nothing will be returned if the user's Steam Community profile visibility is set to `Private`.
+
+---
+
+<div class="grid" markdown>
+
+<div markdown>
 
 {{ param("steamid", "integer", "64-bit Steam ID of the user's friend.") }}
 
 {{ param("relationship", "string", "Relationship qualifier returned as `friend`.") }}
 
 {{ param("friend_since", "integer", "In Unix time, when the relationship was created.") }}
+
+</div>
+
+<div markdown>
+
+=== "JSON"
+    ```json
+    {
+    "friendslist": {
+        "friends": [
+                {
+                    "steamid": "76561198051251936",
+                    "relationship": "friend",
+                    "friend_since": 1771557944
+                },
+                {
+                    "steamid": "76561198056342935",
+                    "relationship": "friend",
+                    "friend_since": 1630520677
+                }
+            ]
+        }
+    }
+    ```
+=== "XML"
+    ```
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE friendslist>
+    <friendslist>
+        <friends>
+            <friend>
+                <steamid>76561198051251936</steamid>
+                <relationship>friend</relationship>
+                <friend_since>1771557944</friend_since>
+            </friend>
+            <friend>
+                <steamid>76561198056342935</steamid>
+                <relationship>friend</relationship>
+                <friend_since>1630520677</friend_since>
+            </friend>
+        </friends>
+    </friendslist>
+    ```
+=== "VDF"
+    ```
+    "friendslist"
+    {
+        "friends"
+        {
+            "0"
+            {
+                "steamid"	"76561198051251936"
+                "relationship"	"friend"
+                "friend_since"	"1771557944"
+            }
+            "1"
+            {
+                "steamid"	"76561198056342935"
+                "relationship"	"friend"
+                "friend_since"	"1630520677"
+            }
+            "2"
+            {
+                "steamid"	"76561198081999231"
+                "relationship"	"friend"
+                "friend_since"	"1631377786"
+            }
+        }
+    }
+    ```
+</div>
+
+</div>

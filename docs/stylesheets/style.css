@@ -1,7 +1,30 @@
+/* Make the right column content stick to the top */
+.grid > div:last-child {
+    position: sticky;
+    top: 2rem; /* Adjust based on your header height */
+    align-self: start;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+}
+
+/* Optional: Add a subtle scroll indicator */
+.grid > div:last-child::-webkit-scrollbar {
+    width: 4px;
+}
+.grid > div:last-child::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 2px;
+}
+
 /* Enable wrapping and allow breaking words if necessary */
 div.highlight code {
     white-space: pre-wrap;
-    word-wrap: break-word;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+}
+
+.md-grid {
+    max-width: 100%;
 }
 
 .md-typeset .admonition,
@@ -17,4 +40,8 @@ div.highlight code {
 .p_type {
     font-size: 0.9em;
     font-weight: 600;
+}
+
+.p_description {
+    font-size: 0.9em;
 }

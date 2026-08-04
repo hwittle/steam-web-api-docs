@@ -3,7 +3,7 @@ def define_env(env):
     def param(name, p_type, description):
         return f"""<span class="p_name">{name}</span> <span class="p_type">`{p_type}`</span>
 
-{description}
+<span class="p_description">{description}</span>
 
 """
 
@@ -11,5 +11,5 @@ def define_env(env):
     def param_bullet(name, p_type, description):
         return f"""
 - <span class="p_name">{name}</span> <span class="p_type">`{p_type}`</span>
-    {description}
+    <span class="p_description">{description}</span>
 """
