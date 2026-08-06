@@ -1,3 +1,190 @@
+/* ========================================
+   STEAM LIGHT MODE
+   ======================================== */
+[data-md-color-scheme="steam-light"] {
+  --md-primary-fg-color:        #1B2838;
+  --md-primary-fg-color--light: #2A475E;
+  --md-primary-fg-color--dark:  #171A21;
+  --md-accent-fg-color:         #66C0F4;
+  --md-accent-fg-color--light:  #8ECBFF;
+  --md-default-bg-color:        #E7EFF0;
+  --md-typeset-color:           #1a1a1a;
+}
+
+/* ========================================
+   STEAM DARK MODE
+   ======================================== */
+[data-md-color-scheme="steam-dark"] {
+  --md-primary-fg-color:        #171A21;
+  --md-primary-fg-color--light: #2A475E;
+  --md-primary-fg-color--dark:  #66C0F4;
+  --md-accent-fg-color:         #66C0F4;
+  --md-accent-fg-color--light:  #8ECBFF;
+  --md-default-bg-color:        #1a1f26;
+  
+  /* Core Text Colors */
+  --md-typeset-color:           #e8edf0;
+  --md-typeset-a-color:         #66C0F4;
+  
+  /* Text on Primary Background */
+  --md-primary-bg-color:        #e8edf0; 
+  --md-primary-bg-color--light: #a0aab0;
+  
+  /* Footer Text Colors */
+  --md-footer-fg-color:         #e8edf0;
+  --md-footer-fg-color--light:  #a0aab0;
+  --md-footer-fg-color--lighter:#a0aab0;
+
+  /* Code Block Colors */
+  --md-code-bg-color:           #0d1117;
+  --md-code-fg-color:           #e8edf0;
+}
+
+/* ========================================
+   FIX 1: JSON Brackets ONLY (Punctuation)
+   ======================================== */
+[data-md-color-scheme="steam-dark"] .md-typeset .highlight .p,
+[data-md-color-scheme="steam-dark"] .md-typeset .highlight .o,
+[data-md-color-scheme="steam-dark"] .md-typeset .highlight .pi,
+[data-md-color-scheme="steam-dark"] .md-typeset .codehilite .p,
+[data-md-color-scheme="steam-dark"] .md-typeset .codehilite .o,
+[data-md-color-scheme="steam-dark"] .md-typeset .codehilite .pi {
+    color: #e8edf0 !important;
+}
+
+/* ========================================
+   FIX 2: Tabbed Content Titles & Active Underline
+   ======================================== */
+/* Tab Text */
+[data-md-color-scheme="steam-dark"] .md-typeset .tabbed-labels > label {
+    color: #a0aab0 !important;
+}
+
+[data-md-color-scheme="steam-dark"] .md-typeset .tabbed-labels > label:hover {
+    color: #66C0F4 !important;
+}
+
+/* CRITICAL FIX: Active Tab Underline (The Bar) */
+/* Targets the ::after pseudo-element of the label associated with the checked radio */
+[data-md-color-scheme="steam-dark"] .md-typeset .tabbed-labels > label[for]:has(+ .tabbed-block .tabbed-content > .tabbed-block:not(.hidden))::after,
+[data-md-color-scheme="steam-dark"] .md-typeset .tabbed-labels > label:has(+ input:checked)::after,
+[data-md-color-scheme="steam-dark"] .md-typeset .tabbed-labels > label--active::after {
+    background-color: #66C0F4 !important; 
+    height: 0.15rem !important; /* Ensure it's visible */
+}
+
+/* Fallback if :has() is not supported or specific structure varies */
+[data-md-color-scheme="steam-dark"] .md-typeset .tabbed-set input:checked + label::after {
+    background-color: #66C0F4 !important;
+    height: 0.15rem !important;
+}
+
+/* ========================================
+   FIX 3: Headers (H1-H6)
+   ======================================== */
+[data-md-color-scheme="steam-dark"] .md-typeset h1,
+[data-md-color-scheme="steam-dark"] .md-typeset h2,
+[data-md-color-scheme="steam-dark"] .md-typeset h3,
+[data-md-color-scheme="steam-dark"] .md-typeset h4,
+[data-md-color-scheme="steam-dark"] .md-typeset h5,
+[data-md-color-scheme="steam-dark"] .md-typeset h6 {
+    color: #e8edf0 !important;
+}
+
+/* ========================================
+   FIX 4: Navigation & Top Tabs
+   ======================================== */
+[data-md-color-scheme="steam-dark"] .md-tabs__link {
+    color: #a0aab0 !important;
+}
+
+[data-md-color-scheme="steam-dark"] .md-tabs__link--active {
+    color: #66C0F4 !important;
+}
+
+/* Top Navigation Active Underline */
+[data-md-color-scheme="steam-dark"] .md-tabs__item--active .md-tabs__link {
+    border-bottom-color: #66C0F4 !important; 
+}
+
+[data-md-color-scheme="steam-dark"] .md-nav__link {
+    color: #e8edf0 !important;
+}
+
+/* ========================================
+   FIX 5: Sidebar Site Name / Title
+   ======================================== */
+[data-md-color-scheme="steam-dark"] .md-nav__title,
+[data-md-color-scheme="steam-dark"] .md-header__topic {
+    color: #e8edf0 !important;
+}
+
+/* Logo Inversion */
+[data-md-color-scheme="steam-dark"] .md-nav__button img,
+[data-md-color-scheme="steam-dark"] .md-header__button img {
+    filter: brightness(0) invert(1);
+}
+
+/* ========================================
+   FIX 6: Footer & Git Revision Date
+   ======================================== */
+/* General Footer Text */
+[data-md-color-scheme="steam-dark"] .md-footer,
+[data-md-color-scheme="steam-dark"] .md-footer-meta {
+    color: #e8edf0 !important;
+}
+
+[data-md-color-scheme="steam-dark"] .md-footer a {
+    color: #66C0F4 !important;
+}
+
+/* Git Revision Date Plugin Text */
+[data-md-color-scheme="steam-dark"] .git-revision-date-localized-plugin,
+[data-md-color-scheme="steam-dark"] .git-revision-date-localized-plugin * {
+    color: #a0aab0 !important;
+}
+
+/* CRITICAL FIX: Git Revision Icon (SVG Fill) */
+[data-md-color-scheme="steam-dark"] .git-revision-date-localized-plugin svg,
+[data-md-color-scheme="steam-dark"] .git-revision-date-localized-plugin .md-icon svg,
+[data-md-color-scheme="steam-dark"] .git-revision-date-localized-plugin svg path {
+    fill: #a0aab0 !important;
+    color: #a0aab0 !important;
+}
+
+/* Copyright Text */
+[data-md-color-scheme="steam-dark"] .md-footer__inner .md-copyright,
+[data-md-color-scheme="steam-dark"] .md-copyright {
+    color: #a0aab0 !important;
+}
+
+[data-md-color-scheme="steam-dark"] .md-copyright a {
+    color: #66C0F4 !important;
+}
+
+/* ========================================
+   FIX 7: Copy Button (Code Block)
+   ======================================== */
+/* Removes background box */
+[data-md-color-scheme="steam-dark"] .md-clipboard {
+    background-color: transparent !important;
+    color: #a0aab0 !important;
+    opacity: 0.7;
+}
+
+[data-md-color-scheme="steam-dark"] .md-clipboard:hover {
+    color: #66C0F4 !important;
+    opacity: 1;
+}
+
+/* Ensure SVG icon inherits color */
+[data-md-color-scheme="steam-dark"] .md-clipboard svg,
+[data-md-color-scheme="steam-dark"] .md-clipboard svg path {
+    fill: currentColor !important;
+}   
+
+
+
 /* Make the right column content stick to the top */
 .grid > div:last-child {
     position: sticky;
@@ -34,14 +221,18 @@ div.highlight code {
 
 .p_name {
     font-family: Consolas, monospace;
-    font-weight: 600;
+    font-size: 1em;
+    font-weight: 500;
 }
 
 .p_type {
-    font-size: 0.9em;
     font-weight: 600;
 }
 
 .p_description {
+    font-size: 0.9em;
+}
+
+.p_version {
     font-size: 0.9em;
 }

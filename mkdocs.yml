@@ -6,15 +6,19 @@ theme:
   name: material
   font: false
   features:
+    - content.code.copy
     - navigation.expand
+    - navigation.sections
     - toc.integrate
-  palette: 
-    - scheme: slate
-      primary: "#00BFC4"
-      accent: "#F5F5F5"
-    - scheme: default
-      primary: "#007F86"
-      accent:  "#00BFC4"
+  palette:
+    - scheme: steam-light
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: steam-dark
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
 
 nav:
   - Home: index.md
@@ -40,6 +44,8 @@ markdown_extensions:
       alternate_style: true
 
 plugins:
+  - git-revision-date-localized:
+      enable_creation_date: true
   - search
   - macros:
       module_name: main

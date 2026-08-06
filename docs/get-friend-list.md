@@ -2,9 +2,10 @@
 
 If the user's Steam Community profile visibility is set to `Public`, retrieves the Steam user's friend list.
 
-```
-ISteamUser/GetFriendList/v0001/?key=<your API key>&<arguments>
-```
+=== "Endpoint"
+    ```
+    https://api.steampowered.com/ISteamUser/GetFriendList/v0001/
+    ```
 
 ### Arguments
 
@@ -14,7 +15,9 @@ ISteamUser/GetFriendList/v0001/?key=<your API key>&<arguments>
 
 <div markdown>
 
-{{ param("steamids", "integer", "User's 64-bit Steam ID") }}
+{{ param("key", "string", "Your designated Steam Web API key.") }}
+
+{{ param("steamid", "integer", "User's 64-bit Steam ID") }}
 
 {{ param("relationship", "string", "Values: all, friend.") }}
 
@@ -26,7 +29,7 @@ ISteamUser/GetFriendList/v0001/?key=<your API key>&<arguments>
 
 === "Example Request"
     ```
-    https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=YOUR_API_KEY&steamids=76561199101839601&format=json
+    https://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=YOUR_API_KEY&steamid=76561199101839601&format=json
     ```
 
 </div>
@@ -73,7 +76,7 @@ The user's friend list as an array of Steam users. Nothing will be returned if t
     }
     ```
 === "XML"
-    ```
+    ```xml
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE friendslist>
     <friendslist>

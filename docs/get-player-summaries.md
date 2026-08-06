@@ -2,9 +2,10 @@
 
 Retrieves the basic profile information for a list of 64-bit Steam IDs.
 
-``` title="Endpoint"
-https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/
-```
+=== "Endpoint"
+    ```
+    https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/
+    ```
 
 ## Arguments
 
@@ -14,7 +15,7 @@ https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/
 
 <div markdown>
 
-{{ param("key", "integer", "Your designated Steam Web API key.") }}
+{{ param("key", "string", "Your designated Steam Web API key.") }}
 
 {{ param("steamids", "array of integers", "Comma-delimited array of 64 bit Steam IDs to return profile information for. Up to 100 Steam IDs can be requested.") }}
 
@@ -145,7 +146,7 @@ Private Data associated with a Steam account are hidden if the user has their pr
     }
     ```
 === "XML"
-    ```
+    ```xml
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE response>
     <response>
@@ -154,7 +155,7 @@ Private Data associated with a Steam account are hidden if the user has their pr
                 <steamid>76561199101839601</steamid>
                 <communityvisibilitystate>3</communityvisibilitystate>
                 <profilestate>1</profilestate>
-                <personaname>Invocation: Women</personaname>
+                <personaname>ΛYΛ</personaname>
                 <commentpermission>1</commentpermission>
                 <profileurl>https://steamcommunity.com/id/amiaZzZ/</profileurl>
                 <avatar>https://avatars.steamstatic.com/1b0f9f9bae10dd50e6a5a9043f96542bc7b0a4fe.jpg</avatar>
@@ -182,7 +183,7 @@ Private Data associated with a Steam account are hidden if the user has their pr
                 "steamid"	"76561199101839601"
                 "communityvisibilitystate"	"3"
                 "profilestate"	"1"
-                "personaname"	"Invocation: Women"
+                "personaname"	"ΛYΛ"
                 "commentpermission"	"1"
                 "profileurl"	"https://steamcommunity.com/id/amiaZzZ/"
                 "avatar"	"https://avatars.steamstatic.com/1b0f9f9bae10dd50e6a5a9043f96542bc7b0a4fe.jpg"
