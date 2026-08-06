@@ -46,7 +46,7 @@ The user's friend list as an array of Steam users. Nothing will be returned if t
 
 <div markdown>
 
-{{ param("steamid", "integer", "64-bit Steam ID of the user's friend.") }}
+{{ param("steamid", "string", "64-bit Steam ID of the user's friend.") }}
 
 {{ param("relationship", "string", "Relationship qualifier returned as `friend`.") }}
 
@@ -111,12 +111,6 @@ The user's friend list as an array of Steam users. Nothing will be returned if t
                 "steamid"	"76561198056342935"
                 "relationship"	"friend"
                 "friend_since"	"1630520677"
-            }
-            "2"
-            {
-                "steamid"	"76561198081999231"
-                "relationship"	"friend"
-                "friend_since"	"1631377786"
             }
         }
     }

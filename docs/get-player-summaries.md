@@ -92,9 +92,11 @@ Private Data associated with a Steam account are hidden if the user has their pr
 
 {{ param("gameid", "integer", "If the user is currently in-game, this value will be returned and set to the gameid of that game.") }}
 
-{{ param("gameserverip", "integer", "If the user is playing online in a game that uses Steam matchmaking, this value will return the ip and port of the game server. Otherwise, the value will be set to `0.0.0.0`") }}
+{{ param("gameserverip", "string", "If the user is playing online in a game that uses Steam matchmaking, this value will return the ip and port of the game server. Otherwise, the value will be set to `0.0.0.0`") }}
 
 {{ param("gameextrainfo", "string", "If the user is currently in-game, this value will be returned and set to the name of the game they are playing (may also be the name of a non-Steam game shortcut).") }}
+
+{{ param("locstatecode", "string", "If set, returns the user's state of residence.") }}
 
 {{ param("cityid", "string", "Returns the name of the city the user has set.") }}
 !!! warning
@@ -102,7 +104,7 @@ Private Data associated with a Steam account are hidden if the user has their pr
 
 {{ param("loccountrycode", "string", "If set, returns the user's country of residence as a 2-character ISO country code.") }}
 
-{{ param("locstatecode", "string", "If set, returns the user's state of residence.") }}
+{{ param("lobbysteamid", "string", ""Undocumented in the official Steam Web API documentation. Based on observed responses, this field appears when a user is in an active game lobby and likely represents the Steam lobby instance ID for games that support Steam matchmaking servers.") }}
 
 {{ param("loccityid", "string", "If set, returns the user's city of residence.") }}
 !!! note

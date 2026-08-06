@@ -1,6 +1,13 @@
 # Welcome to the unofficial Steam Web API Documentation
 
-For full documentation visit [developer.valvesoftware.com/wiki/Steam_Web_API](https://developer.valvesoftware.com/wiki/Steam_Web_API).
+The Steam Web API is a set of HTTP endpoints provided by Valve that allows 
+developers to access Steam user data, game information, and community features. 
+This documentation covers a curated set of commonly used endpoints with 
+detailed parameter descriptions, example requests, and real response samples.
+
+This is an unofficial community resource. For the full list of available 
+interfaces, visit the official 
+[Steam Web API documentation](https://developer.valvesoftware.com/wiki/Steam_Web_API).
 
 ## Getting Started
 A Steam account is needed in order to obtain a Steam Web API Key. You can create an account at [store.steampowered.com/join](https://store.steampowered.com/join)
@@ -10,14 +17,19 @@ Once you have logged into your Steam account, obtain a Steam Web API Key at [ste
 ???+ warning
     Keep your API key safe and do not embed API keys into source code. Use your server's platform secret vault to provide keys to your server-side applications or environment variables if the platform does not offer a secret vault.
 
+???+ note
+    Many Steam Web API endpoints return limited or no data when a user's Steam Community profile is set to Private or Friends Only. Requests using your own API key for your own Steam ID will bypass these restrictions.
+
 ---
+### API Request Structure
 The template to call a Steam Web API method is as follows:
 
-``` title="Steam Web API Method Template"
-https://api.steampowered.com/api.steampowered.com/<INTERFACE>/<METHOD>/v<VERSION>/?key=<YOUR_API_KEY>&format=<OUTPUT>
+```
+https://api.steampowered.com/<INTERFACE>/<METHOD>/v<VERSION>/?key=<YOUR_API_KEY>&format=<OUTPUT>
 ```
 
 ---
+### Making Your First Request
 To find interfaces and methods, call the interface/method, ISteamWebAPIUtil/GetSupportedAPIList.
 
 ???+ note
@@ -122,3 +134,8 @@ All Steam Web API calls can be returned in 3 different formats: JSON, XML, and V
         }
     }
     ```
+
+## What's Next
+Browse the API reference in the sidebar to explore available endpoints, 
+or start with [GetPlayerSummaries](get-player-summaries.md) for a 
+straightforward introduction to the API.
