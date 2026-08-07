@@ -1,4 +1,4 @@
-# GetPlayerAchievements v0001
+# GetPlayerAchievements <span class="p_version">`v0001`</span>
 
 If the user's achievement is set to visible, returns a list of achievement for this user by the requested game.
 
@@ -9,26 +9,21 @@ If the user's achievement is set to visible, returns a list of achievement for t
 
 ### Arguments
 
+---
 <div class="grid" markdown>
 
 <div markdown>
 
 {{ param("key", "string", "Your designated Steam Web API key.") }}
 
+---
 {{ param("steamids", "list", "User's 64-bit Steam ID") }}
-```
-&steamids=<64-bit Steam ID>
-```
 
+---
 {{ param("appid", "integer", "Unique ID for the game you are requesting.") }}
-```
-&appid=<ID number of the requested game>
-```
 
+---
 {{ param("l (optional; letter L)", "string", "If specified and available, return the achievement data in the requested language.") }}
-```
-&l=<english/french/german/etc.>
-```
 
 </div>
 
@@ -36,7 +31,7 @@ If the user's achievement is set to visible, returns a list of achievement for t
 
 === "Example Request"
     ```
-    https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?key=YOUR_API_KEY&steamids=76561199101839601&appid=1086940&format=json
+    https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?key=YOUR_API_KEY&steamids=76561199101839601&appid=1086940&format=json&l=french
     ```
 
 </div>
@@ -47,23 +42,28 @@ If the user's achievement is set to visible, returns a list of achievement for t
 
 ### Returns
 
-The user's achievement list as an array. Nothing will be returned if the user does not share their achivements or if they do not own the game.
-
+A list of achievements a user has obtained, if the profile is publically visible and owns the game.
+The user's achievement list as an array. Private, friends-only, and other privacy settings are not supported unless you are asking for your own personal details, e.g., the WebAPI key you are using is linked to the steamid you are requesting.
 ---
 
 <div class="grid" markdown>
 
 <div markdown>
 
-{{ param("apiname", "string", "The API name of the achievement.") }}
+{{ param("steamid", "string", "User's 64-bit Steam ID.") }}
 
-{{ param("achieved", "integer", "Set as 1 if completed.") }}
+---
 
-{{ param("unlocktime", "integer", "In Unix time, when the achievement was completed.") }}
+{{ param("gameName", "string", "The name of the game.") }}
 
-{{ param("name (optional)", "string", "Localized achievement name.") }}
+---
+{{ param("achievements", "array", "An array of achievemets with the following content:") }}
 
-{{ param("description (optional)", "string", "Localized achievement description.") }}
+{{ param_bullet("apiname", "string", "The API name of the achievement.") }}
+{{ param_bullet("achieved", "integer", "Set as 1 if completed.") }}
+{{ param_bullet("unlocktime", "integer", "In Unix time, when the achievement was completed.") }}
+{{ param_bullet("name (optional)", "string", "Localized achievement name.") }}
+{{ param_bullet("description (optional)", "string", "Localized achievement description.") }}
 
 </div>
 

@@ -58,6 +58,53 @@ div.highlight code {
     font-size: 0.9em;
 }
 
+.md-typeset hr {
+    margin-top: 0.5em;    /* Reduce or increase space above */
+    margin-bottom: 0.5em; /* Reduce or increase space below */
+}
+
+.md-typeset p {
+    font-size: 0.9em;     /* Adjust font size for paragraphs */
+    margin-top: 0.5em;    /* Space above each paragraph */
+    margin-bottom: 0.5em; /* Space below each paragraph */
+}
+
+/* 
+ * Reduce spacing on tabbed content when used in grids
+ * This helps align tabbed code with adjacent content
+ */
+
+/* Reduce top padding of tab content */
+.md-typeset .tabbed-content {
+    padding-top: 0.2em !important;
+}
+
+/* Reduce bottom padding if needed */
+.md-typeset .tabbed-content {
+    padding-bottom: 0.2em !important;
+}
+
+/* Reduce space above the tab set */
+.md-typeset .tabbed-set {
+    margin-top: 0.2em !important;
+}
+
+/* Remove any extra margin on the first code block inside tabs */
+.md-typeset .tabbed-block > pre:first-child {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Reduce gap between the "games" param and the bullet list */
+.md-typeset p:has(+ ul) {
+    margin-bottom: 0.2em !important;
+}
+
+/* Reduce gap before the bullet list */
+.md-typeset ul {
+    margin-top: 0.2em !important;
+}
+
 .p_name {
     font-family: Consolas, monospace;
     font-size: 1em;
@@ -72,6 +119,16 @@ div.highlight code {
     font-size: 0.9em;
 }
 
+.p_extra {
+    font-size: 0.9em;
+    margin-top: 0.5em;  /* Match your paragraph margins */
+    margin-bottom: 0;
+}
+
 .p_version {
+    font-size: 0.9em;
+}
+
+.p_return {
     font-size: 0.9em;
 }

@@ -16,16 +16,20 @@ If the user's Steam Community profile visibility is set to `Public`, returns a l
 <div markdown>
 
 {{ param("key", "string", "Your designated Steam Web API key.") }}
----
 
+---
 {{ param("steamid", "integer", "User's 64-bit Steam ID.") }}
 
+---
 {{ param("include_appinfo", "boolean", "Include game name and logo information in the output. The default is to return appids only.") }}
 
+---
 {{ param("include_played_free_games", "boolean", "By default, free games like Team Fortress 2 are excluded (as technically everyone owns them). If `include_played_free_games` is set, they will be returned if the player has played them at some point. This is the same behavior as the games list on the Steam Community.") }}
 
+---
 {{ param("format", "string", "Output format: json (default), xml, vdf.") }}
 
+---
 {{ param("appids_filter", "array of integers", "You can optionally filter the list to a set of appids.") }}
 ???+ note
     This cannot be passed as a query parameter directly. You have to use the query parameter `input_json`, passing `steamid` and `appids_filter` nested inside as a URL-encoded parameter.
@@ -74,10 +78,8 @@ GetOwnedGames returns a list of games a player owns along with some playtime inf
 {{ param_bullet("name", "string", "The name of the game.") }}
 {{ param_bullet("playtime_2weeks", "integer", "Total number of minutes played in the last 2 weeks.") }}
 {{ param_bullet("playtime_forever", "integer", "Total number of minutes played \"on record,\" since Steam began tracking total playtime in early 2009.") }}
-{{ param_bullet("img_icon_url", "string", "Filenames of various images for the game.") }}
-    - To construct the URL to the image, use this format: https://media.steampowered.com/steamcommunity/public/images/apps/{appid}/{hash}.jpg. For example, the TF2 logo is returned as "07385eb55b5ba974aebbe74d3c99626bda7920b8", which maps to the URL: [https://media.steampowered.com/steamcommunity/public/images/apps/440/07385eb55b5ba974aebbe74d3c99626bda7920b8.jpg]
-{{ param_bullet("has_community_visible_stats", "integer", "Indicates there is a stats page with achievements or other game stats available for this game.") }}
-    - The uniform URL for accessing this data is https://steamcommunity.com/profiles/{steamid}/stats/{appid}. For example, Robin's TF2 stats can be found at: https://steamcommunity.com/profiles/76561197960435530/stats/440. You may notice that clicking this link will actually redirect to a vanity URL like /id/robinwalker/stats/TF2
+{{ param_bullet("img_icon_url", "string", "Filenames of various images for the game.", "To construct the URL to the image, use this format: https://media.steampowered.com/steamcommunity/public/images/apps/{appid}/{hash}.jpg.") }}
+{{ param_bullet("has_community_visible_stats", "integer", "Indicates there is a stats page with achievements or other game stats available for this game.", "The uniform URL for accessing this data is https://steamcommunity.com/profiles/{steamid}/stats/{appid}.") }}
 
 </div>
 
