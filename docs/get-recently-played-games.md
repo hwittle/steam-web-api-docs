@@ -21,7 +21,7 @@ If the user's Steam Community profile visibility is set to `Public`, returns a l
 {{ param("steamid", "integer", "User's 64-bit Steam ID") }}
 
 ---
-{{ param("count", "integer", "Optionally limit to a certain number of games (the number of games a person has played in the last 2 weeks is typically very small).") }}
+{{ param("count", "integer", "Optionally limits the number of games returned. Defaults to returning all recently played games if not specified.") }}
 
 ---
 {{ param("format", "string", "Output format: json (default), xml, vdf.") }}
@@ -42,7 +42,7 @@ If the user's Steam Community profile visibility is set to `Public`, returns a l
 
 ### Returns
 
-A list of games a user has played in the last two weeks, if the profile is publicly visible. Private, friends-only, and other privacy settings are not supported unless you are asking for your own personal details, e.g., the WebAPI key you are using is linked to the steamid you are requesting.
+A list of games the user has played in the last two weeks. Nothing is returned if the profile is not publicly visible.
 
 ---
 
@@ -50,7 +50,7 @@ A list of games a user has played in the last two weeks, if the profile is publi
 
 <div markdown>
 
-{{ param("total_count", "integer", "The total number of games the user played in the last 2 weeks. If you have set a limit with `count`, this will be a return an integer less than or equal to the set amount.") }}
+{{ param("total_count", "integer", "The total number of games the user played in the last 2 weeks. If limited with `count`, returns an integer less than or equal to the specified amount.") }}
 
 ---
 {{ param("games", "array", "An array of games with the following content:") }}

@@ -23,7 +23,7 @@ If the user's Steam Community profile visibility is set to `Public`, retrieves t
 {{ param("relationship", "string", "The value `friend` returns only confirmed friend and `all` returns all relationships including pending friend requests.") }}
 
 ---
-{{ param("format", "string", "Values: json (default), xml, vdf.") }}
+{{ param("format", "string", "Output format: json (default), xml, vdf.") }}
 
 </div>
 

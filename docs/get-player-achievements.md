@@ -1,6 +1,6 @@
 # GetPlayerAchievements <span class="p_version">`v0001`</span>
 
-If the user's achievement is set to visible, returns a list of achievement for this user by the requested game.
+If the user's game details are publicly visible, returns a list of achievement for this user by the requested game.
 
 === "Endpoint"
     ```
@@ -17,13 +17,16 @@ If the user's achievement is set to visible, returns a list of achievement for t
 {{ param("key", "string", "Your designated Steam Web API key.") }}
 
 ---
-{{ param("steamids", "list", "User's 64-bit Steam ID") }}
+{{ param("steamids", "integer", "User's 64-bit Steam ID") }}
 
 ---
 {{ param("appid", "integer", "Unique ID for the game you are requesting.") }}
 
 ---
-{{ param("l (optional; letter L)", "string", "If specified and available, return the achievement data in the requested language.") }}
+{{ param("format", "string", "Output format: json (default), xml, vdf.") }}
+
+---
+{{ param("l (optional)", "string", "If specified and available, return the achievement data in the requested language.") }}
 
 </div>
 
@@ -42,8 +45,8 @@ If the user's achievement is set to visible, returns a list of achievement for t
 
 ### Returns
 
-A list of achievements a user has obtained, if the profile is publically visible and owns the game.
-The user's achievement list as an array. Private, friends-only, and other privacy settings are not supported unless you are asking for your own personal details, e.g., the WebAPI key you are using is linked to the steamid you are requesting.
+A list of achievements the user has obtained for the requested game. Nothing is returned if the profile is not publicly visible or the user does not own the game.
+
 ---
 
 <div class="grid" markdown>
@@ -65,8 +68,10 @@ The user's achievement list as an array. Private, friends-only, and other privac
 {{ param_bullet("name (optional)", "string", "Localized achievement name.") }}
 {{ param_bullet("description (optional)", "string", "Localized achievement description.") }}
 
-</div>
+{{ param("success", "boolean", "Undocumented in the official Steam Web API documentation. Returns true if the request was successful. In VDF format, returned as "1" instead of true.") }}
 
+</div>
+2
 <div markdown>
 
 === "JSON"
