@@ -1,18 +1,37 @@
+---
+title: GetPlayerSummaries
+description: Returns basic information of Steam accounts depending on individual privacy settings.
+interface: ISteamUser
+method: GetPlayerSummaries
+version: v0001
+http_method: GET
+auth: api_key
+formats: [json, xml, vdf]
+privacy: public_or_owner
+last_verified: 14 October 2026
+tags:
+  - ISteamUser
+  - account
+  - privacy-dependent
+---
+
 # GetPlayerSummaries <span class="p_version">`v0002`</span>
 
 Retrieves the basic profile information for a list of 64-bit Steam IDs.
 
-=== "Endpoint"
-    ```
-    https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/
-    ```
+{{ glance() }}
 
-## Arguments
+## Request
 
----
-<div class="grid" markdown>
+```
+GET https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/
+```
+
+<div class="ref-grid" markdown>
 
 <div markdown>
+
+### Parameters
 
 {{ param("key", "string", "Your designated Steam Web API key.") }}
 
@@ -26,6 +45,10 @@ Retrieves the basic profile information for a list of 64-bit Steam IDs.
 
 <div markdown>
 
+### Example Request
+
+#### Minimal
+
 === "Example Request - Single User"
     ```
     https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=YOUR_API_KEY&steamids=76561199101839601&format=json
@@ -35,21 +58,21 @@ Retrieves the basic profile information for a list of 64-bit Steam IDs.
     https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=YOUR_API_KEY&steamids=76561199101839601, 76561198881233167, 76561198377784106&format=json
     ```
 
-</div>
+#### Full
 
 </div>
 
----
+</div>
+
+<div class="ref-grid" markdown>
+
+<div markdown>
+
+### Response
 
 ## Returns
 
 Private Data associated with a Steam account are hidden if the user has their profile visibility set to `Friends Only` or `Private`.
-
----
-
-<div class="grid" markdown>
-
-<div markdown>
 
 #### Public Data
 
@@ -137,6 +160,9 @@ Private Data associated with a Steam account are hidden if the user has their pr
 </div>
 
 <div markdown>
+
+### Example Response
+
 === "JSON"
     ```json
     {

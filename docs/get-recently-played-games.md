@@ -1,19 +1,39 @@
+---
+title: GetRecentlyPlayedGames
+description: Returns a list of recently played games a Steam account owns depending on privacy settings.
+interface: IPlayerService
+method: GetRecentlyPlayedGames
+version: v0001
+http_method: GET
+auth: api_key
+formats: [json, xml, vdf]
+privacy: public_or_owner
+last_verified: 14 October 2026
+tags:
+  - IPlayerService
+  - games
+  - privacy-dependent
+---
+
 # GetRecentlyPlayedGames <span class="p_version">`v0001`</span>
 
 If the user's Steam Community profile visibility is set to `Public`, returns a list of games the user played in the last two weeks. `Private`, `friends-only`, and other privacy settings are not supported unless you are asking for your own personal details, i.e., the Web API key you are using is linked to the Steam ID you are requesting.
 
-=== "Endpoint"
-    ```
-    https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/
-    ```
+{{ glance() }}
 
-### Arguments
+## Request
 
----
+```
+GET https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/
+```
+!!! note
+    Methods in Service interfaces should have their parameters passed and called with the `input_json` query parameter. The `key` and `format` arguments are passed as top-level query parameters.
 
-<div class="grid" markdown>
+<div class="ref-grid" markdown>
 
 <div markdown>
+
+### Parameters
 
 {{ param("key", "string", "Your designated Steam Web API key.") }}
 
@@ -30,25 +50,28 @@ If the user's Steam Community profile visibility is set to `Public`, returns a l
 
 <div markdown>
 
+### Example Request
+
+#### Minimal
+
 === "Example Request"
     ```
     https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=YOUR_API_KEY&steamid=76561199101839601&count=3&format=json
     ```
-</div>
+
+#### Full
 
 </div>
 
----
+</div>
 
-### Returns
-
-A list of games the user has played in the last two weeks. Nothing is returned if the profile is not publicly visible.
-
----
-
-<div class="grid" markdown>
+<div class="ref-grid" markdown>
 
 <div markdown>
+
+### Response
+
+A list of games the user has played in the last two weeks. Nothing is returned if the profile is not publicly visible.
 
 {{ param("total_count", "integer", "The total number of games the user played in the last 2 weeks. If limited with `count`, returns an integer less than or equal to the specified amount.") }}
 
@@ -64,6 +87,9 @@ A list of games the user has played in the last two weeks. Nothing is returned i
 </div>
 
 <div markdown>
+
+### Example Response
+
 === "JSON"
     ```json
     {
@@ -160,6 +186,10 @@ A list of games the user has played in the last two weeks. Nothing is returned i
         }
     }
     ```
+    
+!!! note "Format differences"
+    XML wraps each game in a `message` element, and VDF uses numbered keys with string values.
+
 </div>
 
 </div>

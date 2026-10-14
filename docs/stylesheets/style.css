@@ -1,45 +1,74 @@
 /* Light and dark mode share the same brand colors */
 [data-md-color-scheme="default"],
 [data-md-color-scheme="slate"] {
-  --md-primary-fg-color: #1B2838;
-  --md-primary-fg-color--light: #2A475E;
-  --md-primary-fg-color--dark: #171A21;
-  --md-accent-fg-color: #66C0F4;
-  --md-accent-fg-color--light: #8ECBFF;
-  --md-accent-fg-color--dark: #1B2838;
-  --md-typeset-a-color: #66C0F4;
-  --md-accent-fg-color: #8ECBFF;
+    --md-primary-fg-color: #1B2838;
+    --md-primary-fg-color--light: #2A475E;
+    --md-primary-fg-color--dark: #171A21;
+    --md-accent-fg-color: #66C0F4;
+    --md-accent-fg-color--light: #8ECBFF;
+    --md-accent-fg-color--dark: #1B2838;
+    --md-typeset-a-color: #66C0F4;
+    --md-accent-fg-color: #8ECBFF;
 }
 
 /* Light mode background */
 [data-md-color-scheme="default"] {
-  --md-default-bg-color: #E7EFF0;
-  --md-typeset-color: #1a1a1a;
+    --md-default-bg-color: #E7EFF0;
+    --md-typeset-color: #1a1a1a;
 }
 
 /* Dark mode background */
 [data-md-color-scheme="slate"] {
-  --md-default-bg-color: #1a1f26;
-  --md-typeset-color: #e8edf0;
-  --md-code-bg-color: #0d1117;
+    --md-default-bg-color: #1a1f26;
+    --md-typeset-color: #e8edf0;
+    --md-code-bg-color: #0d1117;
 }
 
-/* Make the right column content stick to the top */
-.grid > div:last-child {
-    position: sticky;
-    top: 2rem; /* Adjust based on your header height */
-    align-self: start;
-    max-height: calc(100vh - 4rem);
-    overflow-y: auto;
+/* Reference layout: one column by default */
+.md-typeset .ref-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+    margin: 1em 0;
 }
 
-/* Optional: Add a subtle scroll indicator */
-.grid > div:last-child::-webkit-scrollbar {
-    width: 4px;
-}
-.grid > div:last-child::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 2px;
+/* Two columns with sticky examples on wide screens only */
+@media screen and (min-width: 76.25em) {
+    .md-typeset .ref-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2rem;
+    }
+
+    .md-typeset .ref-grid>div:last-child {
+        position: sticky;
+        top: 4rem;
+        align-self: start;
+        max-height: calc(100vh - 5rem);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #888 transparent;
+        padding-right: 0.5rem;
+    }
+
+    .md-typeset .ref-grid>div:last-child::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .md-typeset .ref-grid>div:last-child::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+    }
+
+    /* For long pages, use: <div class="ref-grid ref-grid--stack" markdown> */
+    .md-typeset .ref-grid.ref-grid--stack {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .md-typeset .ref-grid.ref-grid--stack>div:last-child {
+        position: static;
+        max-height: none;
+        overflow: visible;
+    }
 }
 
 /* Enable wrapping and allow breaking words if necessary */
@@ -59,14 +88,29 @@ div.highlight code {
 }
 
 .md-typeset hr {
-    margin-top: 0.5em;    /* Reduce or increase space above */
-    margin-bottom: 0.5em; /* Reduce or increase space below */
+    margin-top: 0.5em;
+    /* Reduce or increase space above */
+    margin-bottom: 0.5em;
+    /* Reduce or increase space below */
 }
 
 .md-typeset p {
-    font-size: 0.9em;     /* Adjust font size for paragraphs */
-    margin-top: 0.5em;    /* Space above each paragraph */
-    margin-bottom: 0.5em; /* Space below each paragraph */
+    font-size: 0.7rem;
+    /* Adjust font size for paragraphs */
+    margin-top: 0.5rem;
+    /* Space above each paragraph */
+    margin-bottom: 0.5rem;
+    /* Space below each paragraph */
+}
+
+.md-typeset li {
+    font-size: 0.7rem;
+    margin-top: 0.5em;
+    margin-bottom: 0;
+}
+
+.md-typeset strong {
+    font-weight: 600;
 }
 
 /* 
@@ -90,7 +134,7 @@ div.highlight code {
 }
 
 /* Remove any extra margin on the first code block inside tabs */
-.md-typeset .tabbed-block > pre:first-child {
+.md-typeset .tabbed-block>pre:first-child {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 }
@@ -105,24 +149,13 @@ div.highlight code {
     margin-top: 0.2em !important;
 }
 
-.p_name {
+.label_bold {
     font-family: Consolas, monospace;
-    font-size: 1em;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .p_type {
     font-weight: 600;
-}
-
-.p_description {
-    font-size: 0.9em;
-}
-
-.p_extra {
-    font-size: 0.9em;
-    margin-top: 0.5em;  /* Match your paragraph margins */
-    margin-bottom: 0;
 }
 
 .p_version {
@@ -131,4 +164,15 @@ div.highlight code {
 
 .p_return {
     font-size: 0.9em;
+}
+
+.p_required {
+    font-size: 0.7em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-left: 0.5em;
+    padding: 0.1em 0.5em;
+    border: 1px solid currentColor;
+    border-radius: 2px;
 }

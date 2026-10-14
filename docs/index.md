@@ -1,13 +1,20 @@
 # Welcome to the unofficial Steam Web API Documentation
 
-The Steam Web API is a set of HTTP endpoints provided by Valve that allows 
-developers to access Steam user data, game information, and community features. 
-This documentation covers a curated set of commonly used endpoints with 
+The Steam Web API is a set of HTTP endpoints provided by Valve that allows
+developers to access Steam user data, game information, and community features.
+This documentation covers a curated set of commonly used endpoints with
 detailed parameter descriptions, example requests, and real response samples.
 
-This is an unofficial community resource. For the full list of available 
-interfaces, visit the official 
-[Steam Web API documentation](https://developer.valvesoftware.com/wiki/Steam_Web_API).
+## Sources
+This is an unofficial community resource. Endpoint listings, parameters, and
+descriptions are sourced from the official
+[Steamworks Web API Reference](https://partner.steamgames.com/doc/webapi).
+Additional context is drawn from the
+[Valve Developer Community](https://steamcommunity.com/dev) page.
+
+The Steamworks reference documents available interfaces and their parameters
+but does not include response schemas or example payloads. This project fills
+that gap by providing verified response samples for each documented endpoint.
 
 ## Getting Started
 A Steam account is needed in order to obtain a Steam Web API Key. You can create an account at [store.steampowered.com/join](https://store.steampowered.com/join)

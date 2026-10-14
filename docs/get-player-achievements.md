@@ -1,20 +1,39 @@
+---
+title: GetPlayerAchievements
+description: Returns the achievements of a game the Steam account owns only if profile visibility is set to public.
+interface: ISteamUserStats
+method: GetPlayerAchievements
+version: v0001
+http_method: GET
+auth: api_key
+formats: [json, xml, vdf]
+privacy: public_or_owner
+last_verified: 14 October 2026
+tags:
+  - ISteamUserStats
+  - achievements
+  - privacy-dependent
+---
+
 # GetPlayerAchievements <span class="p_version">`v0001`</span>
 
 If the user's game details are publicly visible, returns a list of achievement for this user by the requested game.
 
-=== "Endpoint"
-    ```
-    https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/
-    ```
+{{ glance() }}
 
-### Arguments
+## Request
 
----
-<div class="grid" markdown>
+```
+GET https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/
+```
+
+<div class="ref-grid" markdown>
 
 <div markdown>
 
-{{ param("key", "string", "Your designated Steam Web API key.") }}
+### Parameters
+
+{{ param("key", "string", "Your designated Steam Web API key.", required=True) }}
 
 ---
 {{ param("steamids", "integer", "User's 64-bit Steam ID") }}
@@ -32,26 +51,28 @@ If the user's game details are publicly visible, returns a list of achievement f
 
 <div markdown>
 
+### Example Request
+
+#### Minimal
+
 === "Example Request"
     ```
     https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?key=YOUR_API_KEY&steamids=76561199101839601&appid=1086940&format=json&l=french
     ```
 
-</div>
+#### Full
 
 </div>
 
----
+</div>
 
-### Returns
-
-A list of achievements the user has obtained for the requested game. Nothing is returned if the profile is not publicly visible or the user does not own the game.
-
----
-
-<div class="grid" markdown>
+<div class="ref-grid" markdown>
 
 <div markdown>
+
+### Response
+
+A list of achievements the user has obtained for the requested game. Nothing is returned if the profile is not publicly visible or the user does not own the game.
 
 {{ param("steamid", "string", "User's 64-bit Steam ID.") }}
 
@@ -68,11 +89,13 @@ A list of achievements the user has obtained for the requested game. Nothing is 
 {{ param_bullet("name (optional)", "string", "Localized achievement name.") }}
 {{ param_bullet("description (optional)", "string", "Localized achievement description.") }}
 
-{{ param("success", "boolean", "Undocumented in the official Steam Web API documentation. Returns true if the request was successful. In VDF format, returned as "1" instead of true.") }}
+{{ param("success", "boolean", "Undocumented in the official Steam Web API documentation. Returns true if the request was successful. In VDF format, returned as \"1\" instead of true.") }}
 
 </div>
-2
+
 <div markdown>
+
+### Example Response
 
 === "JSON"
     ```json
@@ -160,6 +183,9 @@ A list of achievements the user has obtained for the requested game. Nothing is 
         "success"	"1"
     }
     ```
+!!! note "Format differences"
+    XML wraps each game in a `message` element, and VDF uses numbered keys with string values.
+
 </div>
 
 </div>

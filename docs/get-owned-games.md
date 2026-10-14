@@ -1,89 +1,129 @@
-# GetOwnedGames <span class="p_version">`v0001`</span>
-
-If the user's Steam Community profile visibility is set to `Public`, returns a list of games the user owns along with playtime information. `Private`, `friends-only`, and other privacy settings are not supported unless you are asking for your own personal details, i.e., the Web API key you are using is linked to the Steam ID you are requesting.
-
-=== "Endpoint"
-    ```
-    https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/
-    ```
-
-### Arguments
-
+---
+title: GetOwnedGames
+description: Returns the games a Steam account owns, with playtime for each game.
+interface: IPlayerService
+method: GetOwnedGames
+version: v0001
+http_method: GET
+auth: api_key
+formats: [json, xml, vdf]
+privacy: public_or_owner
+last_verified: 14 October 2026
+tags:
+  - IPlayerService
+  - games
+  - privacy-dependent
 ---
 
-<div class="grid" markdown>
+# GetOwnedGames <span class="p_version">`v0001`</span>
+
+Returns a list of games an account owns, with playtime for each game. What comes back depends on the targeted account's privacy settings in relation to your Steam account.
+
+{{ glance() }}
+
+## Request
+
+```
+GET https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/
+```
+!!! note
+    Methods in Service interfaces should have their parameters passed and called with the `input_json` query parameter. The `key` and `format` arguments are passed as top-level query parameters.
+
+<div class="ref-grid" markdown>
 
 <div markdown>
 
-{{ param("key", "string", "Your designated Steam Web API key.") }}
+### Parameters
 
----
-{{ param("steamid", "integer", "User's 64-bit Steam ID.") }}
-
----
-{{ param("include_appinfo", "boolean", "Include game name and logo information in the output. The default is to return appids only.") }}
-
----
-{{ param("include_played_free_games", "boolean", "By default, free games like Team Fortress 2 are excluded (as technically everyone owns them). If `include_played_free_games` is set, they will be returned if the player has played them at some point. This is the same behavior as the games list on the Steam Community.") }}
+{{ param("key", "string", "Your Steam Web API key.", required=True) }}
 
 ---
 {{ param("format", "string", "Output format: json (default), xml, vdf.") }}
 
 ---
-{{ param("appids_filter", "array of integers", "You can optionally filter the list to a set of appids.") }}
-???+ note
-    This cannot be passed as a query parameter directly. You have to use the query parameter `input_json`, passing `steamid` and `appids_filter` nested inside as a URL-encoded parameter.
+
+{{ param("steamid", "uint64", "The 64-bit Steam ID of the account to look up.", required=True) }}
+
+---
+
+{{ param("include_appinfo", "bool", "When true, each game also includes its name and image hashes. When omitted, the response contains only app IDs and playtime fields.") }}
+
+<!-- VERIFY: confirm by calling with and without this parameter. -->
+
+---
+
+{{ param("include_played_free_games", "bool", "When true, free games the account has played are included. They are left out by default.") }}
+
+---
+
+{{ param("appids_filter", "uint32", "Limits the response to the listed app IDs.") }}
+
+---
+
+{{ param("format", "string", "Response format: `json` (default), `xml`, or `vdf`.") }}
 
 </div>
 
 <div markdown>
 
-=== "Example Request"
-    ```
-    https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=YOUR_API_KEY&steamid=76561199101839601&include_appinfo=true&include_played_free_games=true&format=json
-    ```
-    
----
+### Example Request
 
-=== "With "appids_filter" - Pretty Ver."
+#### Minimal
+
+=== "Readable"
     ```
-    https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=YOUR_API_KEY&format=json&input_json={"steamid":76561199101839601,"include_appinfo":true,"appids_filter":[4000, 21690, 22330]}
+    https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=YOUR_API_KEY&format=json&input_json={"steamid": 76561199101839601}
     ```
-=== "With "appids_filter" - Encoded Ver."
+
+=== "URL-encoded (ready to use)"
     ```
-    https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=YOUR_API_KEY&format=json&input_json=%7B%22steamid%22%3A76561199101839601%2C%22include_appinfo%22%3Atrue%2C%22appids_filter%22%3A%5B4000%2C%2021690%2C%2022330%5D%7D
+    https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=YOUR_API_KEY&format=json&input_json=%7B%22steamid%22%3A%2076561199101839601%2C%20%22include_appinfo%22%3Atrue%2C%20%22include_played_free_games%22%3A%20true%2C%20%22appids_filter%22%3A%5B4000%2C%2021690%2C%2022330%5D%7D
+    ```
+
+#### Full
+
+=== "Readable"
+    ```
+    https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=YOUR_API_KEY&format=json&input_json={"steamid": 76561199101839601, "include_appinfo":true, "include_played_free_games": true, "appids_filter":[4000, 21690, 22330]}
+    ```
+
+=== "URL-encoded (ready to use)"
+    ```
+    https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=YOUR_API_KEY&format=json&input_json=%7B%22steamid%22%3A%2076561199101839601%2C%20%22include_appinfo%22%3Atrue%2C%20%22include_played_free_games%22%3A%20true%2C%20%22appids_filter%22%3A%5B4000%2C%2021690%2C%2022330%5D%7D
+    ```
     ```
 
 </div>
 
 </div>
 
----
-
-### Returns
-
-GetOwnedGames returns a list of games a player owns along with some playtime information, if the profile is publicly visible. Private, friends-only, and other privacy settings are not supported unless you are asking for your own personal details (ie the WebAPI key you are using is linked to the steamid you are requesting).
-
----
-
-<div class="grid" markdown>
+<div class="ref-grid" markdown>
 
 <div markdown>
 
-{{ param("game_count", "integer", "The total number of games the user owns \(including free games if `include_played_free_games` passed\).") }}
+### Response
 
-{{ param("games", "array", "An array of games with the following content:") }}
+{{ param("game_count", "uint32", "Number of games the account owns. Includes played free games when `include_played_free_games` is set.") }}
 
-{{ param_bullet("appid", "integer", "Unique ID for the game.") }}
-{{ param_bullet("name", "string", "The name of the game.") }}
-{{ param_bullet("playtime_2weeks", "integer", "Total number of minutes played in the last 2 weeks.") }}
-{{ param_bullet("playtime_forever", "integer", "Total number of minutes played \"on record,\" since Steam began tracking total playtime in early 2009.") }}
-{{ param_bullet("img_icon_url", "string", "Filenames of various images for the game.", "To construct the URL to the image, use this format: https://media.steampowered.com/steamcommunity/public/images/apps/{appid}/{hash}.jpg.") }}
-{{ param_bullet("has_community_visible_stats", "integer", "Indicates there is a stats page with achievements or other game stats available for this game.", "The uniform URL for accessing this data is https://steamcommunity.com/profiles/{steamid}/stats/{appid}.") }}
+<!-- VERIFY: confirm what game_count counts when appids_filter is used. -->
+
+{{ param("games", "Game[]", "One object per game, with the fields below.") }}
+
+{{ param_bullet("appid", "uint32", "The game's app ID.") }}
+{{ param_bullet("name", "string", "The game's title. Present when `include_appinfo` is set.") }}
+{{ param_bullet("playtime_forever", "int64", "Total minutes played on record.") }}
+{{ param_bullet("playtime_2weeks", "int64", "Minutes played in the last two weeks. Appears only for games played in that period.") }}
+{{ param_bullet("img_icon_url", "string", "Hash used to build the game's icon URL. Present when `include_appinfo` is set.", "Icon URL pattern: `https://media.steampowered.com/steamcommunity/public/images/apps/{appid}/{hash}.jpg`") }}
+{{ param_bullet("has_community_visible_stats", "bool", "Whether the game has a public stats page. Appears only for some games. Returned as `true` in JSON and XML, and as the string `1` in VDF.", "Stats page URL pattern: https://steamcommunity.com/profiles/{steamid}/stats/{appid}") }}
+{{ param_bullet("has_leaderboards", "bool", "Appears only for some games.") }}
+{{ param_bullet("content_descriptorids", "uint32[]", "Appears only for some games with mature content. The list of ids can be found under [EUGCContentDescriptorID](https://partner.steamgames.com/doc/api/ISteamUGC#EUGCContentDescriptorID).") }}
 
 </div>
 
 <div markdown>
+
+### Example Response
+
 === "JSON"
     ```json
     {
@@ -120,6 +160,7 @@ GetOwnedGames returns a list of games a player owns along with some playtime inf
         }
     }
     ```
+
 === "XML"
     ```xml
     <?xml version="1.0" encoding="UTF-8"?>
@@ -156,6 +197,7 @@ GetOwnedGames returns a list of games a player owns along with some playtime inf
         </games>
     </response>
     ```
+
 === "VDF"
     ```
     "response"
@@ -196,6 +238,10 @@ GetOwnedGames returns a list of games a player owns along with some playtime inf
         }
     }
     ```
+
+!!! note "Format differences"
+    XML wraps each game in a `message` element, and VDF uses numbered keys with string values.
+
 </div>
 
 </div>
