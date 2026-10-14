@@ -26,7 +26,6 @@ theme:
 
 nav:
   - Home: index.md
-  - Getting started: getting-started.md
   - Endpoints:
     - IPlayerService:
       - GetOwnedGames: get-owned-games.md
@@ -36,7 +35,6 @@ nav:
       - GetFriendList: get-friend-list.md
     - ISteamUserStats:
       - GetPlayerAchievements: get-player-achievements.md
-  - Concepts: concepts.md
   - Errors: errors.md
   - About This Documentation: about-this-documentation.md
 
