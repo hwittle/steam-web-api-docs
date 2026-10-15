@@ -1,6 +1,6 @@
 ---
 title: GetFriendList
-description: Returns the friends a Steam account befriended only if profile visibility is set to public.
+description: Returns the friends list of a Steam account, with the date each friendship began.
 interface: ISteamUser
 method: GetFriendList
 version: v0001
@@ -8,7 +8,7 @@ http_method: GET
 auth: api_key
 formats: [json, xml, vdf]
 privacy: public_or_owner
-last_verified: 14 October 2026
+last_verified: 15 October 2026
 tags:
   - ISteamUser
   - friends
@@ -17,8 +17,7 @@ tags:
 
 # GetFriendList <span class="p_version">`v0001`</span>
 
-If the user's Steam Community profile visibility is set to `Public`, retrieves the Steam user's friend list.
-
+Returns the friends of a Steam account, with the date each friendship began. The account's friends list must be visible to you, unless the API key belongs to the account you are asking about.
 
 {{ glance() }}
 
@@ -34,17 +33,21 @@ GET https://api.steampowered.com/ISteamUser/GetFriendList/v0001/
 
 ### Parameters
 
-{{ param("key", "string", "Your designated Steam Web API key.") }}
+{{ param("key", "string", "Your Steam Web API key.", required=True) }}
 
 ---
-{{ param("format", "string", "Output format: json (default), xml, vdf.") }}
+
+{{ param("format", "string", "Response format: `json` (default), `xml`, or `vdf`.") }}
 
 ---
-{{ param("steamid", "integer", "User's 64-bit Steam ID") }}
+
+{{ param("steamid", "uint64", "The 64-bit Steam ID of the account to look up.", required=True) }}
 
 ---
-{{ param("relationship", "string", "The value `friend` returns only confirmed friend and `all` returns all relationships including pending friend requests.") }}
 
+{{ param("relationship", "string", "Which relationships to return. `friend` returns confirmed friends only. `all` returns every relationship, including pending requests.") }}
+
+<!-- VERIFY: confirm the default when relationship is omitted. -->
 </div>
 
 <div markdown>
@@ -53,28 +56,15 @@ GET https://api.steampowered.com/ISteamUser/GetFriendList/v0001/
 
 #### Minimal
 
-=== "Readable"
-    ```
-    https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=YOUR_API_KEY&format=json&input_json={"steamid": 76561199101839601}
-    ```
-
-=== "URL-encoded (ready to use)"
-    ```
-    https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=YOUR_API_KEY&format=json&input_json=%7B%22steamid%22%3A%2076561199101839601%2C%20%22include_appinfo%22%3Atrue%2C%20%22include_played_free_games%22%3A%20true%2C%20%22appids_filter%22%3A%5B4000%2C%2021690%2C%2022330%5D%7D
-    ```
+```
+https://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=YOUR_API_KEY&format=json&steamid=76561199101839601
+```
 
 #### Full
 
-=== "Readable"
-    ```
-    https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=YOUR_API_KEY&format=json&input_json={"steamid": 76561199101839601, "include_appinfo":true, "include_played_free_games": true, "appids_filter":[4000, 21690, 22330]}
-    ```
-
-=== "URL-encoded (ready to use)"
-    ```
-    https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=YOUR_API_KEY&format=json&input_json=%7B%22steamid%22%3A%2076561199101839601%2C%20%22include_appinfo%22%3Atrue%2C%20%22include_played_free_games%22%3A%20true%2C%20%22appids_filter%22%3A%5B4000%2C%2021690%2C%2022330%5D%7D
-    ```
-    ```
+```
+https://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=YOUR_API_KEY&format=json&steamid=76561199101839601&relationship="friend"
+```
 
 </div>
 
@@ -86,13 +76,13 @@ GET https://api.steampowered.com/ISteamUser/GetFriendList/v0001/
 
 ### Response
 
-{{ param("steamid", "string", "64-bit Steam ID of the user's friend.") }}
+{{ param("friends", "Friend[]", "One object per relationship, with the fields below.") }}
 
----
-{{ param("relationship", "string", "Relationship qualifier returned as `friend`.") }}
+{{ param_bullet("steamid", "string", "The other account's 64-bit Steam ID. JSON and VDF return it as a string, unlike the numeric `steamid` request parameter.") }}
+{{ param_bullet("relationship", "string", "How the account is related to the one you asked about. `friend` marks a confirmed friend.") }}
+{{ param_bullet("friend_since", "uint32", "Unix time, in seconds, when the friendship began.") }}
 
----
-{{ param("friend_since", "integer", "In Unix time, when the relationship was created.") }}
+<!-- VERIFY: confirm the other relationship values returned with relationship=all. -->
 
 </div>
 
@@ -161,7 +151,7 @@ GET https://api.steampowered.com/ISteamUser/GetFriendList/v0001/
     ```
 
 !!! note "Format differences"
-    XML wraps each game in a `message` element, and VDF uses numbered keys with string values.
+    XML wraps each friend in a `friend` element, and VDF uses numbered keys with string values.
 
 </div>
 

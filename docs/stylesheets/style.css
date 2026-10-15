@@ -176,3 +176,32 @@ div.highlight code {
     border: 1px solid currentColor;
     border-radius: 2px;
 }
+
+.md-typeset .glance {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2rem;
+    margin: 1rem 0 0.25rem;
+    padding: 0.4rem 0 0.4rem 0.9rem;
+    border-left: 3px solid var(--md-accent-fg-color);
+}
+
+.md-typeset .glance dt {
+    margin: 0;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.75;
+}
+
+.md-typeset .glance dd {
+    margin: 0;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.md-typeset .glance__verified {
+    margin-top: 0;
+    font-size: 0.6rem;
+    opacity: 0.75;
+}

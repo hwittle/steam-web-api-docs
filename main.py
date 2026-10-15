@@ -9,33 +9,52 @@ def define_env(env):
 """
 
     @env.macro
-    def param_bullet(name, p_type, p_description, p_extra=None):
-        if p_extra:
-            return f"""
+    def param_bullet(name, p_type, p_description, extra=None):
+        extra_line = f"\n    {extra}\n" if extra else ""
+        return f"""
 - <span class="label_bold">{name}</span> <span class="p_type">`{p_type}`</span>
 
-    <span>{p_description}</span>
-    
-    <span">{p_extra}</span>
-"""
-        return f"""
-- <span class="p_name">{name}</span> <span class="p_type">`{p_type}`</span>
-
-    <span>{p_description}</span>
-"""
+    {p_description}
+{extra_line}"""
 
     @env.macro
     def glance():
         meta = env.page.meta
-        rows = [
-            ("Interface", meta.get("interface")),
-            ("Method", meta.get("method")),
-            ("Version", meta.get("version")),
+        base = "../" * env.page.url.count("/")  # relative path to site root
+
+        auth_labels = {"api_key": "API key"}
+        privacy_labels = {"public_or_owner": "Depends on profile privacy"}
+
+        auth = meta.get("auth")
+        privacy = meta.get("privacy")
+        formats = ", ".join(f.upper() for f in meta.get("formats", []))
+
+        items = [
+            ("Auth", auth_labels.get(auth, auth)),
+            ("Privacy", privacy_labels.get(privacy, privacy)),
+            ("Formats", formats),
             ("HTTP method", meta.get("http_method")),
-            ("Authentication", meta.get("auth")),
-            ("Formats", ", ".join(meta.get("formats", []))),
-            ("Last verified", meta.get("last_verified")),
         ]
-        lines = ["| | |", "|---|---|"]
-        lines += [f"| **{k}** | {v} |" for k, v in rows if v]
-        return "\n".join(lines)
+        cells = "".join(
+            f'<div class="glance__item"><dt>{k}</dt><dd>{v}</dd></div>'
+            for k, v in items if v
+        )
+        verified = meta.get("last_verified")
+        note = (
+            f'<p class="glance__verified">Last verified {verified}</p>'
+            if verified else ""
+        )
+        return f'\n<dl class="glance">{cells}</dl>\n\n{note}\n'
+
+    @env.macro
+    def service_note():
+        return (
+            '!!! note\n'
+            '    This is a Service interface. Send the method\'s parameters in the '
+            '`input_json` query parameter. The `key` and `format` parameters stay at '
+            'the top level. See [Pass parameters](../index.md#pass-parameters).\n'
+        )
+
+    @env.macro
+    def differs(text):
+        return f'!!! note "Differs from Valve\'s reference"\n    {text}\n'

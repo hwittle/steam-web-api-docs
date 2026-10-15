@@ -1,6 +1,6 @@
 ---
 title: GetPlayerAchievements
-description: Returns the achievements of a game the Steam account owns only if profile visibility is set to public.
+description: Returns the achievements an account has unlocked, or not yet unlocked, in one game.
 interface: ISteamUserStats
 method: GetPlayerAchievements
 version: v0001
@@ -17,7 +17,7 @@ tags:
 
 # GetPlayerAchievements <span class="p_version">`v0001`</span>
 
-If the user's game details are publicly visible, returns a list of achievement for this user by the requested game.
+Returns the achievements for one game on a Steam account, with the unlock time for each one that has been completed. The account's game details must be visible to you, unless the API key belongs to the account you are asking about.
 
 {{ glance() }}
 
@@ -33,19 +33,27 @@ GET https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/
 
 ### Parameters
 
-{{ param("key", "string", "Your designated Steam Web API key.", required=True) }}
+{{ param("key", "string", "Your Steam Web API key.", required=True) }}
 
 ---
-{{ param("steamids", "integer", "User's 64-bit Steam ID") }}
+
+{{ param("format", "string", "Response format: `json` (default), `xml`, or `vdf`.") }}
 
 ---
-{{ param("appid", "integer", "Unique ID for the game you are requesting.") }}
+
+{{ param("steamid", "uint64", "The 64-bit Steam ID of the account to look up.", required=True) }}
+
+<!-- VERIFY: confirm the parameter is steamid, not steamids. -->
 
 ---
-{{ param("format", "string", "Output format: json (default), xml, vdf.") }}
+
+{{ param("appid", "uint32", "The app ID of the game to return achievements for.", required=True) }}
 
 ---
-{{ param("l (optional)", "string", "If specified and available, return the achievement data in the requested language.") }}
+
+{{ param("l", "string", "Language for the achievement names and descriptions. When omitted, [describe what you observed].") }}
+
+<!-- VERIFY: confirm accepted values (names or codes) and the behavior when l is omitted. -->
 
 </div>
 
@@ -55,12 +63,15 @@ GET https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/
 
 #### Minimal
 
-=== "Example Request"
-    ```
-    https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?key=YOUR_API_KEY&steamids=76561199101839601&appid=1086940&format=json&l=french
-    ```
+```
+https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?key=YOUR_API_KEY&format=json&steamids=76561199101839601&appid=1086940
+```
 
 #### Full
+
+```
+https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?key=YOUR_API_KEY&format=json&steamids=76561199101839601&appid=1086940&l=french
+```
 
 </div>
 
@@ -72,30 +83,37 @@ GET https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/
 
 ### Response
 
-A list of achievements the user has obtained for the requested game. Nothing is returned if the profile is not publicly visible or the user does not own the game.
+The response is a single `playerstats` object. The account's game details must be visible to you, or the response contains no achievements. [Describe the exact response you saw for a game the account does not own.]
 
-{{ param("steamid", "string", "User's 64-bit Steam ID.") }}
+{{ param("steamID", "string", "The account's 64-bit Steam ID. Returned as a string.") }}
+
+---
+
+{{ param("gameName", "string", "The game's title.") }}
 
 ---
 
-{{ param("gameName", "string", "The name of the game.") }}
+{{ param("achievements", "Achievement[]", "One object per achievement, with the fields below.") }}
+
+{{ param_bullet("apiname", "string", "The achievement's API name.") }}
+{{ param_bullet("achieved", "uint32", "`1` if the account has unlocked the achievement, `0` if not.") }}
+{{ param_bullet("unlocktime", "uint32", "Unix time, in seconds, when the achievement was unlocked. `0` when it has not been unlocked.") }}
+{{ param_bullet("name", "string", "The achievement's display name. Present when `l` is set.") }}
+{{ param_bullet("description", "string", "The achievement's description. Present when `l` is set.") }}
+
+<!-- VERIFY: confirm name and description are present only when l is set, and that hidden achievements return an empty description. -->
 
 ---
-{{ param("achievements", "array", "An array of achievemets with the following content:") }}
 
-{{ param_bullet("apiname", "string", "The API name of the achievement.") }}
-{{ param_bullet("achieved", "integer", "Set as 1 if completed.") }}
-{{ param_bullet("unlocktime", "integer", "In Unix time, when the achievement was completed.") }}
-{{ param_bullet("name (optional)", "string", "Localized achievement name.") }}
-{{ param_bullet("description (optional)", "string", "Localized achievement description.") }}
-
-{{ param("success", "boolean", "Undocumented in the official Steam Web API documentation. Returns true if the request was successful. In VDF format, returned as \"1\" instead of true.") }}
+{{ param("success", "bool", "Whether the request succeeded. Valve does not document this field. VDF returns it as the string `1`.") }}
 
 </div>
 
 <div markdown>
 
 ### Example Response
+
+Shortened to two of the game's achievements. Captured with `l=french`.
 
 === "JSON"
     ```json
@@ -184,7 +202,7 @@ A list of achievements the user has obtained for the requested game. Nothing is 
     }
     ```
 !!! note "Format differences"
-    XML wraps each game in a `message` element, and VDF uses numbered keys with string values.
+    XML wraps each achievement in an `achievement` element, and VDF uses numbered keys with string values.
 
 </div>
 

@@ -1,148 +1,101 @@
-# Welcome to the unofficial Steam Web API Documentation
-
-The Steam Web API is a set of HTTP endpoints provided by Valve that allows
-developers to access Steam user data, game information, and community features.
-This documentation covers a curated set of commonly used endpoints with
-detailed parameter descriptions, example requests, and real response samples.
-
-## Sources
-This is an unofficial community resource. Endpoint listings, parameters, and
-descriptions are sourced from the official
-[Steamworks Web API Reference](https://partner.steamgames.com/doc/webapi).
-Additional context is drawn from the
-[Valve Developer Community](https://steamcommunity.com/dev) page.
-
-The Steamworks reference documents available interfaces and their parameters
-but does not include response schemas or example payloads. This project fills
-that gap by providing verified response samples for each documented endpoint.
-
-## Getting Started
-A Steam account is needed in order to obtain a Steam Web API Key. You can create an account at [store.steampowered.com/join](https://store.steampowered.com/join)
-
-Once you have logged into your Steam account, obtain a Steam Web API Key at [steamcommunity.com/dev/apikey](https://steamcommunity.com/dev/apikey). This key identifies your application to Steam and determines which endpoints you can access based on your account's permissions (some endpoints require a game purchase or developer registration).
-
-???+ warning
-    Keep your API key safe and do not embed API keys into source code. Use your server's platform secret vault to provide keys to your server-side applications or environment variables if the platform does not offer a secret vault.
-
-???+ note
-    Many Steam Web API endpoints return limited or no data when a user's Steam Community profile is set to Private or Friends Only. Requests using your own API key for your own Steam ID will bypass these restrictions.
-
 ---
-### API Request Structure
-The template to call a Steam Web API method is as follows:
+title: Unofficial Steam Web API documentation
+description: An unofficial reference for the Steam Web API, with parameters, example requests, and captured responses in JSON, XML, and VDF.
+---
+
+# Unofficial Steam Web API documentation
+
+The Steam Web API is a set of HTTP endpoints from Valve for reading Steam account, game, and community data. This site documents its endpoints with parameter descriptions, example requests, and captured responses in JSON, XML, and VDF.
+
+This is an unofficial resource and is not affiliated with Valve. See [About this documentation](about.md) for its sources and how pages are verified.
+
+## Get an API key
+
+1. [Create a Steam account](https://store.steampowered.com/join) if you do not have one.
+2. Sign in and register for a key at [steamcommunity.com/dev/apikey](https://steamcommunity.com/dev/apikey).
+3. Copy the key and store it somewhere private.
+
+The key identifies your application to Steam. Some methods return data only for certain kinds of keys, such as publisher keys. Each endpoint page states what it requires.
+
+<!-- VERIFY: confirm the key form's current requirements before describing them. -->
+
+!!! warning
+    Treat your API key like a password. Do not put it in source code, in code that runs in a browser, or in a URL you share. Store it in your server's secret manager or in an environment variable. If a key is exposed, revoke it on the page where you registered it and request a new one.
+
+## Make your first request
+
+Every request follows this pattern:
 
 ```
-https://api.steampowered.com/<INTERFACE>/<METHOD>/v<VERSION>/?key=<YOUR_API_KEY>&format=<OUTPUT>
+https://api.steampowered.com/INTERFACE/METHOD/VERSION/?key=YOUR_API_KEY&format=FORMAT
 ```
 
----
-### Making Your First Request
-To find interfaces and methods, call the interface/method, ISteamWebAPIUtil/GetSupportedAPIList.
+Replace the uppercase placeholders:
 
-???+ note
-    By default, it only displays APIs that do not require an API key. When passed a key parameter (`key=<YOUR_API_KEY>`), GetSupportedAPIList will return all APIs that your key can access.
+- `INTERFACE`: the group the method belongs to, such as `ISteamUser`.
+- `METHOD`: the method name, such as `GetPlayerSummaries`.
+- `VERSION`: the version as the endpoint page shows it, such as `v0001`.
+- `YOUR_API_KEY`: your key.
+- `FORMAT`: `json`, `xml`, or `vdf`. The default is `json`.
 
-=== "No API Key"
-    ```
+To list the interfaces and methods Steam exposes, call `ISteamWebAPIUtil/GetSupportedAPIList`. Without a key it lists only methods that do not require one. With a key it lists every method that key can access.
+
+=== "Without a key"
+```
     https://api.steampowered.com/ISteamWebAPIUtil/GetSupportedAPIList/v0001/
-    ```
-=== "With API Key"
-    ```
+```
+
+=== "With a key"
+```
     https://api.steampowered.com/ISteamWebAPIUtil/GetSupportedAPIList/v0001/?key=YOUR_API_KEY
-    ```
+```
 
-## Output Formats
-All Steam Web API calls can be returned in 3 different formats: JSON, XML, and VDF.
+All examples on this site use the public host, `api.steampowered.com`. Valve also runs `partner.steam-api.com` for publishers. It uses a publisher key and has stricter rate limits, and this site does not cover it.
 
-???+ note
-    If no format parameter (`format=OUTPUT`) is passed, the output format will default to JSON.
+<!-- VERIFY: confirm the partner host description against Valve's reference. -->
 
-=== "JSON"
-    Output returned in the JSON format.
+## Pass parameters
 
-    - The arrays are represented as a named array describing the types of objects listed within.
-    - Null is present as json's null
-    ``` json
-    {
-        "apilist": {
-            "interfaces": [
-                {
-                    "name": "IClientStats_1046930",
-                    "methods": [
-                        {
-                            "name": "ReportEvent",
-                            "version": 1,
-                            "httpmethod": "POST",
-                            "parameters": []
-                        }
-                    ]
-                }
-                ...
-            ]
-        }
-    }
-    ```
+How you send a method's parameters depends on its interface.
 
-=== "XML"
-    Output returned as an XML document.
+Most interfaces take parameters as ordinary query parameters:
 
-    - XML attributes are not used.
-    - The arrays are represented as a series of labeled sub-elements tags describing the content contained inside.
-    - Null is presented as the word "null" between the element tags.
-    ```xml
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE apilist>
-    <apilist>
-        <interfaces>
-            <interface>
-                <name>IClientStats_1046930</name>
-                <methods>
-                    <method>
-                        <name>ReportEvent</name>
-                        <version>1</version>
-                        <httpmethod>POST</httpmethod>
-                        <parameters></parameters>
-                    </method>
-                </methods>
-            </interface>
-            ...
-        </interfaces>
-    </apilist>
-    ```
+```
+https://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=YOUR_API_KEY&steamid=76561199101839601
+```
 
-=== "VDF"
-    Output returned as a VDF file.
+<!-- VERIFY: confirm the GetFriendList version and parameters when that page is converted. -->
 
-    - Valve's internal data format.
-    - The arrays are represented as a named VDF array describing  the types of objects listed within.
-    ```
-    "apilist"
-    {
-        "interfaces"
-        {
-            "0"
-            {
-                "name"	"IClientStats_1046930"
-                "methods"
-                {
-                    "0"
-                    {
-                        "name"	"ReportEvent"
-                        "version"	"1"
-                        "httpmethod"	"POST"
-                        "parameters"
-                        {
+Service interfaces, whose names end in `Service`, such as `IPlayerService`, take their parameters in one `input_json` query parameter. The `key` and `format` parameters stay at the top level. This is also how you send array parameters such as `appids_filter`.
 
-                        }
-                    }
-                }
-            }
-            ...
-        }
-    }
-    ```
+=== "Readable"
+```
+    https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=YOUR_API_KEY&format=json&input_json={"steamid": 76561199101839601}
+```
 
-## What's Next
-Browse the API reference in the sidebar to explore available endpoints, 
-or start with [GetPlayerSummaries](get-player-summaries.md) for a 
-straightforward introduction to the API.
+=== "URL-encoded"
+```
+    https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=YOUR_API_KEY&format=json&input_json=%7B%22steamid%22%3A%2076561199101839601%7D
+```
+
+Percent-encode the JSON before you send it. Browsers and most HTTP libraries do this for you. If you build the URL by hand, encode it yourself.
+
+## Response formats
+
+Every method can return JSON, XML, or VDF. JSON is the default. Set `format` to change it. The samples below are an excerpt of the `GetSupportedAPIList` response.
+
+[keep your three tabs here]
+
+Each endpoint page lists any differences in how a format represents its fields.
+
+## Profile privacy
+
+A Steam Community profile can be public, friends only, or private. Many methods return less data, or none, when the account you ask about is not public. What you get depends on that account's privacy settings and on your relationship to it. Each endpoint page shows a Privacy value in its at-a-glance strip and describes what was observed.
+
+<!-- VERIFY: the old text said a key's own Steam ID bypasses privacy restrictions. Confirm per endpoint before restoring it. -->
+
+## Next steps
+
+- Choose a method from the endpoint reference in the sidebar.
+- See [GetOwnedGames](endpoints/get-owned-games.md) for a complete example page.
+- If a request fails or returns nothing, see [Errors](errors.md).

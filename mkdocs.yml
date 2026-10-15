@@ -28,15 +28,15 @@ nav:
   - Home: index.md
   - Endpoints:
     - IPlayerService:
-      - GetOwnedGames: get-owned-games.md
-      - GetRecentlyPlayedGames: get-recently-played-games.md
+      - GetOwnedGames: IPlayerService/get-owned-games.md
+      - GetRecentlyPlayedGames: IPlayerService/get-recently-played-games.md
     - ISteamUser:
-      - GetPlayerSummaries: get-player-summaries.md
-      - GetFriendList: get-friend-list.md
+      - GetFriendList: ISteamUser/get-friend-list.md
+      - GetPlayerSummaries: ISteamUser/get-player-summaries.md
     - ISteamUserStats:
-      - GetPlayerAchievements: get-player-achievements.md
+      - GetPlayerAchievements: ISteamUserStats/get-player-achievements.md
   - Errors: errors.md
-  - About This Documentation: about-this-documentation.md
+  - About This Documentation: about.md
 
 markdown_extensions:
   - admonition

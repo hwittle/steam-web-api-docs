@@ -1,6 +1,6 @@
 ---
 title: GetRecentlyPlayedGames
-description: Returns a list of recently played games a Steam account owns depending on privacy settings.
+description: Returns the games a Steam account has played in the last two weeks, with playtime for each.
 interface: IPlayerService
 method: GetRecentlyPlayedGames
 version: v0001
@@ -8,7 +8,7 @@ http_method: GET
 auth: api_key
 formats: [json, xml, vdf]
 privacy: public_or_owner
-last_verified: 14 October 2026
+last_verified: 15 October 2026
 tags:
   - IPlayerService
   - games
@@ -17,7 +17,7 @@ tags:
 
 # GetRecentlyPlayedGames <span class="p_version">`v0001`</span>
 
-If the user's Steam Community profile visibility is set to `Public`, returns a list of games the user played in the last two weeks. `Private`, `friends-only`, and other privacy settings are not supported unless you are asking for your own personal details, i.e., the Web API key you are using is linked to the Steam ID you are requesting.
+Returns the games an account has played in the last two weeks, with playtime for each. The account's data must be visible to you, unless the API key belongs to the account you are asking about.
 
 {{ glance() }}
 
@@ -26,8 +26,7 @@ If the user's Steam Community profile visibility is set to `Public`, returns a l
 ```
 GET https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/
 ```
-!!! note
-    Methods in Service interfaces should have their parameters passed and called with the `input_json` query parameter. The `key` and `format` arguments are passed as top-level query parameters.
+{{ service_note() }}
 
 <div class="ref-grid" markdown>
 
@@ -35,16 +34,19 @@ GET https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/
 
 ### Parameters
 
-{{ param("key", "string", "Your designated Steam Web API key.") }}
+{{ param("key", "string", "Your Steam Web API key.", required=True) }}
 
 ---
-{{ param("steamid", "integer", "User's 64-bit Steam ID") }}
+
+{{ param("format", "string", "Response format: `json` (default), `xml`, or `vdf`.") }}
 
 ---
-{{ param("count", "integer", "Optionally limits the number of games returned. Defaults to returning all recently played games if not specified.") }}
+
+{{ param("steamid", "uint64", "The 64-bit Steam ID of the account to look up.", required=True) }}
 
 ---
-{{ param("format", "string", "Output format: json (default), xml, vdf.") }}
+
+{{ param("count", "uint32", "Maximum number of games to return. When omitted, every game played in the last two weeks is returned.") }}
 
 </div>
 
@@ -54,12 +56,27 @@ GET https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/
 
 #### Minimal
 
-=== "Example Request"
+=== "Readable"
     ```
-    https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=YOUR_API_KEY&steamid=76561199101839601&count=3&format=json
+    https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=YOUR_API_KEY&format=json&input_json={"steamid": 76561199101839601}
+    ```
+
+=== "URL-encoded"
+    ```
+    https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=YOUR_API_KEY&format=json&input_json=%7B%22steamid%22%3A%2076561199101839601%7D
     ```
 
 #### Full
+
+=== "Readable"
+    ```
+    https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=YOUR_API_KEY&format=json&input_json={"steamid": 76561199101839601, "count":3}
+    ```
+
+=== "URL-encoded"
+    ```
+    https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=YOUR_API_KEY&format=json&input_json=%7B%22steamid%22%3A%2076561199101839601%2C%20%22count%22%3A3%7D
+    ```
 
 </div>
 
@@ -73,16 +90,15 @@ GET https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/
 
 A list of games the user has played in the last two weeks. Nothing is returned if the profile is not publicly visible.
 
-{{ param("total_count", "integer", "The total number of games the user played in the last 2 weeks. If limited with `count`, returns an integer less than or equal to the specified amount.") }}
+{{ param("total_count", "uint32", "Number of games the account played in the last two weeks. This value is not affected by `count`, so it can be larger than the number of objects in `games`.") }}
 
----
-{{ param("games", "array", "An array of games with the following content:") }}
+{{ param("games", "Game[]", "One object per game, with the fields below.") }}
 
-{{ param_bullet("appid", "integer", "Unique ID for the game.") }}
-{{ param_bullet("name", "string", "The name of the game.") }}
-{{ param_bullet("playtime_2weeks", "integer", "Total number of minutes played in the last 2 weeks.") }}
-{{ param_bullet("playtime_forever", "integer", "Total number of minutes played \"on record,\" since Steam began tracking total playtime in early 2009.") }}
-{{ param_bullet("img_icon_url", "string", "Filenames of various images for the game.", "To construct the URL to the image, use this format: https://media.steampowered.com/steamcommunity/public/images/apps/{appid}/{hash}.jpg.") }}
+{{ param_bullet("appid", "uint32", "The game's app ID.") }}
+{{ param_bullet("name", "string", "The game's title.") }}
+{{ param_bullet("playtime_2weeks", "int64", "Minutes played in the last two weeks.") }}
+{{ param_bullet("playtime_forever", "int64", "Total minutes played on record.") }}
+{{ param_bullet("img_icon_url", "string", "Hash used to build the game's icon URL.", "Icon URL pattern: `https://media.steampowered.com/steamcommunity/public/images/apps/{appid}/{hash}.jpg`") }}
 
 </div>
 
