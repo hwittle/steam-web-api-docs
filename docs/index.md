@@ -97,5 +97,5 @@ A Steam Community profile can be public, friends only, or private. Many methods 
 ## Next steps
 
 - Choose a method from the endpoint reference in the sidebar.
-- See [GetOwnedGames](endpoints/get-owned-games.md) for a complete example page.
+- See [GetOwnedGames](IPlayerService/get-owned-games.md) for a complete example page.
 - If a request fails or returns nothing, see [Errors](errors.md).
