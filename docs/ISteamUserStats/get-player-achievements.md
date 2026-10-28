@@ -8,7 +8,7 @@ http_method: GET
 auth: api_key
 formats: [json, xml, vdf]
 privacy: public_or_owner
-last_verified: 14 October 2026
+last_verified: 27 October 2026
 tags:
   - ISteamUserStats
   - achievements
@@ -43,17 +43,13 @@ GET https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/
 
 {{ param("steamid", "uint64", "The 64-bit Steam ID of the account to look up.", required=True) }}
 
-<!-- VERIFY: confirm the parameter is steamid, not steamids. -->
-
 ---
 
 {{ param("appid", "uint32", "The app ID of the game to return achievements for.", required=True) }}
 
 ---
 
-{{ param("l", "string", "Language for the achievement names and descriptions. When omitted, [describe what you observed].") }}
-
-<!-- VERIFY: confirm accepted values (names or codes) and the behavior when l is omitted. -->
+{{ param("l", "string", "Language for the achievement names and descriptions. When omitted, the name of the achievement and its description will not be retrieved.") }}
 
 </div>
 
@@ -83,7 +79,7 @@ https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?key=YO
 
 ### Response
 
-The response is a single `playerstats` object. The account's game details must be visible to you, or the response contains no achievements. [Describe the exact response you saw for a game the account does not own.]
+The response is a single `playerstats` object. The account's game details must be visible to you, or the response contains no achievements. If the account does not own the game, an `error` and `success` response will be returned with no information about the account and the game's achievements.
 
 {{ param("steamID", "string", "The account's 64-bit Steam ID. Returned as a string.") }}
 
@@ -101,7 +97,9 @@ The response is a single `playerstats` object. The account's game details must b
 {{ param_bullet("name", "string", "The achievement's display name. Present when `l` is set.") }}
 {{ param_bullet("description", "string", "The achievement's description. Present when `l` is set.") }}
 
-<!-- VERIFY: confirm name and description are present only when l is set, and that hidden achievements return an empty description. -->
+---
+
+{{ param("error", "string", "If the account is not public or does not own the specified game, returns `Profile is not public`.") }}
 
 ---
 
