@@ -35,8 +35,12 @@ nav:
   - Home: index.md
   - Endpoints:
     - IPlayerService:
+      - IPlayerService/get-badges.md
+      - IPlayerService/get-community-badge-progress.md
       - IPlayerService/get-owned-games.md
       - IPlayerService/get-recently-played-games.md
+      - IPlayerService/get-single-game-playtime.md
+      - IPlayerService/get-steam-level.md
     - ISteamUser:
       - ISteamUser/get-friend-list.md
       - ISteamUser/get-player-summaries.md
