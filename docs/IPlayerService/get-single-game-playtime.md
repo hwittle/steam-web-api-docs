@@ -25,7 +25,7 @@ Returns information about a Steam user's playtime for a specified game, however 
 ## Request
 
 ```
-GET https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/
+GET https://api.steampowered.com/IPlayerService/GetSingleGamePlaytime/v0001/
 ```
 {{ service_note() }}
 
